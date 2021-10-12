@@ -1,0 +1,90 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\graphicspath{ {images/} }
+\usepackage{cite}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+            
+        \Huge
+        \textbf{Diseño y Planeación - Alma Mater Martial Combat}
+            
+        \vspace{0.5cm}
+        \LARGE
+        
+            
+        \vspace{1.5cm}
+            
+        \textbf{José Alejandro Moreno Mesa - 1001369765\\\
+        Miguel Ángel Restrepo Rueda - 1001017183
+        }
+            
+        \vfill
+            
+        \vspace{0.8cm}
+            
+        \Large
+        Despartamento de Ingeniería Electrónica y Telecomunicaciones\\
+        Universidad de Antioquia\\
+        Medellín\\
+        Octubre de 2021
+            
+    \end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+\section{Introducción}\label{intro}
+Haciendo uso de todo lo que hemos aprendido a lo largo del curso, especialmente el concepto de programación orientada a objetos y el uso de la interfaz gráfica, se hará un juego de peleas en el que dos personajes se enfrentaran en una batalla hasta que uno de los dos sea el vencedor de la pelea. Este diseño se inspira en los juegos “Mortal Kombat” y “Street Fighters”. 
+
+\section{Modelamiento de los objetos}
+A continuación se presentan las clases que se van a desarrollar para el juego:
+
+\subsection{Clase Personaje}
+Esta clase se encarga del control de objeto personaje. En este, se podrá cargar el sprite del personaje principal, definir los movimientos principales, cargar sus rutinas de ataque y muerte. 
+Los movimientos que tendrá el personaje principal serán:
+\begin{itemize}
+    \item Movimiento rectilíneo uniforme para moverse de izquierda a derecha y de derecha a izquierda 
+    \item Agacharse 
+    \itemSaltar, se puede saltar como caída libre en el caso de que no se toque otra tecla distinta a la de saltar (tecla W).
+    \itemEn caso de que se toque otra tecla (A o D) en conjunto con W, se hará un salto parabólico.
+    \item Si se presiona la tecla F se lanza una patada y si se presiona la tecla Q se lanza un puño, por lo que el personaje que recibe la patada o puño se empuja hacia atrás, pero si se está muy cerca del límite del mapa(50 píxeles o menos), entonces este chocará con el límite, quedará parado y rebotara, haciendo un movimiento masa-resorte amortiguado. 
+    \item Si se presiona la tecla ESC se pausa la partida, se la da las opciones al jugador de reanudar la partida, volver al menú inicial y terminar la partida 
+\end{itemize}
+
+
+\subsection{Clase Enemigos}
+Esta clase obedece la misma descripción de la clase personaje solo que en esta clase se maneja todo con movimientos predeterminados para que se mueva la máquina. 
+
+\subsection{Clase Partida}
+Esta clase se encarga de permitir guardar un “historial” de las partidas de los jugadores con el fin de que cada jugador no pierda el progreso que lleva en el juego. Primero se tomará del objeto de la clase mapas que esté instanciado en la partida los datos de: tiempo de partida, nivel, cantidad de vida de los jugadores y posición. Posteriormente, se guardará esta información en un archivo txt llamado “historial.txt”, desde donde esta misma clase tomará los datos del mismo archivo para pasarlas a la clase mapas, para así volver a configurar la escena tal como estaba anteriormente.
+
+
+\subsection{Clase Mapas}
+Aquí se contará con las imágenes de cada mapa, encima cada vez que se derrote un enemigo, se cambia el mapa y se aumenta la dificultad, al aumentar la dificultad lo que se hace es que se le sube la vida al enemigo y al personaje principal se le deja igual, por lo que toma más golpes derrotar al enemigo haciendo que la dificultad para que el jugador gane sea mayor. En el último mapa, el enemigo tendrá aún más vida que en el nivel anterior y el jugador tendrá menos tiempo para matar al enemigo. Cabe resaltar que en esta clase se maneja el tiempo de cada partida y la vida del personaje principal y del enemigo, es decir que se representa con una barra. 
+
+\subsection{Clase Intro}
+Mediante esta clase, se podrá crear un objeto llamado introducción. Al ser instanciado, este objeto mostrará en pantalla una secuencia de imágenes en las que el personaje principal y el enemigo interactuarán brevemente antes de la batalla. Esta acción tardará alrededor de 15 segundos durante los cuales las teclas del computador estarán bloqueadas. 
+
+\subsection{Clase Transiciones}
+Esta sirve para que al derrotar un enemigo se pueda pasar al siguiente mapa. Al instanciar un objeto de esta clase, se mostrará en pantalla una secuencia de imágenes similar a la expresada en la clase “intro”. El fin de esta clase es darle una mejor continuidad a la experiencia.
+
+
+
+\section{Cronograma}
+\begin{figure}
+    \centering
+    \includegraphics[width= 15cm]{tabla.jpg}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+
+\end{document}
