@@ -149,22 +149,116 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="enemigo1">
+   <widget class="QLabel" name="n_enemigo1">
     <property name="geometry">
      <rect>
       <x>570</x>
       <y>180</y>
-      <width>91</width>
-      <height>16</height>
+      <width>181</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Segoe MDL2 Assets</family>
+      <family>Lucida Calligraphy</family>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="n_enemigo1_2">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>290</y>
+      <width>181</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Lucida Calligraphy</family>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+color: rgb(0, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_reanudar">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>140</y>
+      <width>171</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/Imagenes/Botones/boton reanudar partida.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="pausa">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>120</y>
+      <width>411</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Lucida Handwriting</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="text">
-     <string>Jonathan</string>
+     <string>Menu de pausa</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_guardar">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>410</y>
+      <width>181</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/Imagenes/Botones/boton guardar partida.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_volver_menu">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>200</y>
+      <width>241</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/Imagenes/Botones/boton volver al menu.png);</string>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>

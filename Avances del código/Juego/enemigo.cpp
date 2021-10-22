@@ -2,7 +2,10 @@
 
 enemigo::enemigo()
 {
-
+    for(short i = 0; i < 5; i++){
+        movimien[i] = 0;
+        pos[i] = true;
+    }
 }
 
 void enemigo::set_sprites1()
@@ -16,3 +19,75 @@ void enemigo::set_sprites2()
     enemigo2.load(":/Imagenes/Enemigo 2/Parado/1.png");
     setPixmap(enemigo2.scaled(160,327));
 }
+
+void enemigo::sprites_e2(short a)
+{
+    switch (a) {
+
+
+    case 'i':
+        if(movimien[0] == 2){
+            pos[0] = false;
+        }
+        else if (movimien[0] == 0){
+            pos[0] = true;
+        }
+
+        movimien[0] += (2*pos[0])-1;
+        setPixmap(QPixmap(salto_e2[movimien[0]]).scaled(160,327));
+    break;
+
+
+
+    case 'l':
+        if(movimien[2] == 2){
+            pos[2] = false;
+        }
+        else if (movimien[2] == 0){
+            pos[2] = true;
+        }
+
+        movimien[2] += (2*pos[2])-1;
+        setPixmap(QPixmap(movimiento_e2[movimien[2]]).scaled(160,327));
+
+    break;
+
+    case 'j':
+        if(movimien[3] == 2){
+            pos[3] = false;
+        }
+        else if (movimien[3] == 0){
+            pos[3] = true;
+        }
+
+        movimien[3] += (2*pos[3])-1;
+        setPixmap(QPixmap(movimiento_e2[movimien[3]]).scaled(160,327));
+    break;
+
+    case 'p':
+        if(movimien[3] == 2){
+            pos[3] = false;
+        }
+        else if (movimien[4] == 0){
+            pos[3] = true;
+        }
+
+        movimien[3] += (2*pos[3])-1;
+        setPixmap(QPixmap(patada_e2[movimien[3]]).scaled(160,327));
+    break;
+
+    case 'm':
+        if(movimien[3] == 2){
+            pos[3] = false;
+        }
+        else if (movimien[3] == 0){
+            pos[3] = true;
+        }
+
+        movimien[3] += (2*pos[3])-1;
+        setPixmap(QPixmap(golpe_e2[movimien[3]]).scaled(160,327));
+    break;
+}
+}
+
+

@@ -8,6 +8,7 @@ class partida: public QObject, public QGraphicsPixmapItem
 {
 public:
     partida();
+    void tecla_pausa(short tecla);
 };
 
 #endif // PARTIDA_H

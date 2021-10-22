@@ -11,6 +11,7 @@ public:
     void mapa1_vidaper();
     void mapa1_vidaene();
 
+
 private:
     QPixmap mapa1,mapa2;
 
