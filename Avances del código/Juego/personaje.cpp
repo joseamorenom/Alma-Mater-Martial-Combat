@@ -82,7 +82,17 @@ void personaje::sprites(short a)
             setPixmap(QPixmap(golpe[movimien[3]]).scaled(130,300));
         break;
         }
+}
+
+void personaje::borde()
+{
+
+    float resorte=0,a=300,w=0.2,desfase=3.146;
+    for(int i=0;i<10;i++){
+        resorte=360+a*sin(w*i+desfase);
+        setPos(resorte,500);
     }
+}
 
 
 

@@ -6,6 +6,8 @@
 #include "personaje.h"
 #include <iostream>
 #include <QtDebug>
+#include <QThread>
+
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -26,7 +28,12 @@ MainWindow::MainWindow(QWidget *parent)
     menu->setBackgroundBrush(QImage(":/Imagenes/Menu/Fondo_menu.png").scaled(1550,820));
     ui->graphicsView->setScene(menu);
     timer= new QTimer(this);
+    timer2=new QTimer(this);
+    timer3=new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(nivel1_tiempo()));
+    connect(timer2,SIGNAL(timeout()),this,SLOT(resorte()));
+    connect(timer3,SIGNAL(timeout()),this,SLOT(resorte_derecha()));
+
 
 
     set_ventana();
@@ -47,16 +54,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->btn_guardar->hide();
     ui->btn_volver_menu->hide();
     ui->pausa->hide();
+    ui->rect->hide();
 
 
 
 
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
+
 
 void MainWindow::set_ventana()
 {
@@ -82,6 +87,7 @@ void MainWindow::on_btn_1_jug_clicked()
     ui->btn_guardar->hide();
     ui->btn_volver_menu->hide();
     ui->pausa->hide();
+    ui->rect->hide();
     ui->btn_nueva_par->show();
     ui->btn_cargar_par->show();
     ui->btn_volver->show();
@@ -128,6 +134,8 @@ void MainWindow::on_btn_volver_clicked()
     ui->btn_guardar->hide();
     ui->btn_volver_menu->hide();
     ui->pausa->hide();
+    ui->rect->hide();
+
 
 }
 
@@ -148,12 +156,15 @@ void MainWindow::on_btn_multi_clicked()
     ui->btn_guardar->hide();
     ui->btn_volver_menu->hide();
     ui->pausa->hide();
+    ui->rect->hide();
+
 
 }
 
 
 void MainWindow::on_btn_nueva_par_clicked()
 {
+
     cont=90;
     timer->start(1000);
     ui->btn_nueva_par->hide();
@@ -166,6 +177,7 @@ void MainWindow::on_btn_nueva_par_clicked()
     ui->btn_guardar->hide();
     ui->btn_volver_menu->hide();
     ui->pausa->hide();
+    ui->rect->hide();
     ui->lcdNumber->show();
     ui->graphicsView->setGeometry(0,0,1900,1005);
     nivel1->setSceneRect(0,0,1898,1003);
@@ -177,9 +189,9 @@ void MainWindow::on_btn_nueva_par_clicked()
     ui->n_enemigo1_2->setGeometry(1340,-20,500,100);
     ui->lcdNumber->setGeometry(700,10,100,35);
     jugador= new personaje;
-    jugador->set_sprites();
-    jugador->setPos(0,500);
     nivel1->addItem(jugador);
+    jugador->set_sprites();
+    jugador->setPos(pos0xper,pos0yper);
     enemigo1 =new enemigo;
     enemigo1->set_sprites1();
     enemigo1->setPos(1400,470);
@@ -192,10 +204,13 @@ void MainWindow::on_btn_nueva_par_clicked()
     mapa1e->mapa1_vidaene();
     mapa1e->setPos(1090,0);
     nivel1->addItem(mapa1e);
+
+
 }
 
 void MainWindow::on_btn_iniciar_clicked()
 {
+    cont=90;
     timer->start(1000);
     ui->btn_nueva_par->hide();
     ui->btn_cargar_par->hide();
@@ -208,6 +223,7 @@ void MainWindow::on_btn_iniciar_clicked()
     ui->btn_guardar->hide();
     ui->btn_volver_menu->hide();
     ui->n_enemigo1_2->hide();
+    ui->rect->hide();
     ui->lcdNumber->show();
     ui->lcdNumber->setGeometry(750,10,100,35);
     ui->graphicsView->setGeometry(0,0,1900,1005);
@@ -234,6 +250,7 @@ void MainWindow::on_btn_iniciar_clicked()
     mapa2e->mapa1_vidaene();
     mapa2e->setPos(1090,0);
     multijugador->addItem(mapa2e);
+
 }
 
 void MainWindow::nivel1_tiempo()
@@ -265,23 +282,50 @@ void MainWindow::nivel1_tiempo()
           nivel1->removeItem(jugador);
           timer->stop();
           cont=90;
-     }
+    }
 }
 
+void MainWindow::resorte()
+{
+
+    float resorte=0,a=30,desfase=0,w=0.2,xf;
+       resorte=360+a*sin(w*i+desfase);
+       xf=abs(360-resorte);
+       jugador->setPos(x1=xf,y1);
+       i+=0.5;
+       if(i>=10){
+           timer2->stop();
+       }
+
+}
+
+void MainWindow::resorte_derecha()
+{
+
+    float resorte=0,a=30,w=0.2;
+        resorte=abs(((a*sin(w*i)+1400)));
+        qDebug()<<resorte;
+        qDebug()<<i;
+             qDebug()<<"entro derecha";
+       jugador->setPos(x1=resorte,y1);
+       i-=0.5;
+       if(i<=0){
+           timer3->stop();
+       }
+}
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
 
-    QPen pen(Qt::red,6,Qt::SolidLine);
-    QBrush color(QColor(255,77,77));
     switch (event->key()){
         case Qt::Key_Escape:
+
         ui->pausa->show();
         timer->stop();
         ui->pausa->setFont(QFont("Lucida Handwriting",26,QFont::Bold));
         ui->pausa->setText("Menu de pausa");
         ui->pausa->setGeometry(635,92,500,100);
-        nivel1->addRect(480,100,600,620,pen,color);
-        multijugador->addRect(480,100,600,620,pen,color);
+       // nivel1->addRect(480,100,600,620,pen,color);
+     //  multijugador->addRect(480,100,600,620,pen,color);
         ui->btn_reanudar->show();
         ui->btn_guardar->show();
         ui->btn_volver_menu->show();
@@ -290,14 +334,31 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         ui->btn_guardar->setGeometry(620,305,350,130);
         ui->btn_volver_menu->setGeometry(610,440,373,130);
         ui->btn_salir->setGeometry(620,575,354,130);
-        ui->graphicsView->setGeometry(0,0,1900,1005);
+        ui->rect->show();
+        ui->rect->setGeometry(480,100,600,620);
+       // ui->graphicsView->setGeometry(0,0,1900,1005);
     case Qt::Key_D:
         jugador->sprites('d');
         jugador->setPos(x1=x1+20,y1);
+        if(x1>=1440){
+               qDebug()<<"Tocó el borde";
+               timer3->start(50);
+               i=10;
+               resorte_derecha();
+           }
         break;
     case Qt::Key_A:
         jugador->sprites('a');
         jugador->setPos(x1=x1-20,y1);
+        if(x1<5){
+            qDebug()<<"Tocó el borde";
+            timer2->start(50);
+            i=0;
+            resorte();
+        }
+
+          //  jugador->borde();
+
         break;
     case Qt::Key_W:
         jugador->sprites('w');
@@ -334,18 +395,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 }
 }
 
-void MainWindow::on_btn_reanudar_clicked()
-{
-    timer->start();
-    QPainter *rectan;
-    rectan=new QPainter;
-    rectan->eraseRect(480,100,600,620);
-    ui->btn_reanudar->hide();
-    ui->btn_guardar->hide();
-    ui->btn_volver_menu->hide();
-    ui->btn_salir->hide();
-    ui->pausa->hide();
-}
+
+
+
+
 
 void MainWindow::on_btn_guardar_clicked()
 {
@@ -371,11 +424,63 @@ void MainWindow::on_btn_volver_menu_clicked()
      ui->btn_guardar->hide();
      ui->btn_volver_menu->hide();
      ui->pausa->hide();
-     jugador->set_sprites();
-     jugador->setPos(0,500);
-     nivel1->removeItem(jugador);
+     ui->rect->hide();
+     x1=0;
+     y1=500;
+     x3=1400;
+     y3=480;
+     nivel1->clear();
+     multijugador->clear();
+
+
+/*
+     multijugador->removeItem(jugador);
+     multijugador->removeItem(enemigo2);
+*/
      ui->graphicsView->setScene(menu);
 
 
 
+
+
 }
+MainWindow::~MainWindow()
+{
+    delete ui;
+
+    delete timer;
+    delete timer2;
+    delete timer3;
+
+
+    delete nivel1;
+    delete nivel2;
+    delete multijugador;
+    delete mensaje;
+    delete jugador;
+    delete enemigo1;
+    delete enemigo2;
+    delete mapa2;
+    delete mapa2e;
+    delete mapa1;
+    delete mapa1e;
+
+
+
+}
+
+
+
+void MainWindow::on_btn_reanudar_clicked()
+{
+    timer->start();
+    ui->btn_reanudar->hide();
+    ui->btn_guardar->hide();
+    ui->btn_volver_menu->hide();
+    ui->btn_salir->hide();
+    ui->pausa->hide();
+    ui->rect->hide();
+   // nivel1->removeItem(rect);
+
+}
+

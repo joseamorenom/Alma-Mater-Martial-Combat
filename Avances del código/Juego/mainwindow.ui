@@ -213,7 +213,7 @@ color: rgb(0, 0, 0);</string>
    <widget class="QLabel" name="pausa">
     <property name="geometry">
      <rect>
-      <x>640</x>
+      <x>590</x>
       <y>120</y>
       <width>411</width>
       <height>41</height>
@@ -261,6 +261,38 @@ color: rgb(0, 0, 0);</string>
      <string/>
     </property>
    </widget>
+   <widget class="QLabel" name="rect">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>510</y>
+      <width>81</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/Imagenes/Menu/rectangulo.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <zorder>graphicsView</zorder>
+   <zorder>btn_1_jug</zorder>
+   <zorder>btn_multi</zorder>
+   <zorder>btn_nueva_par</zorder>
+   <zorder>btn_cargar_par</zorder>
+   <zorder>btn_volver</zorder>
+   <zorder>btn_iniciar</zorder>
+   <zorder>lcdNumber</zorder>
+   <zorder>n_enemigo1</zorder>
+   <zorder>n_enemigo1_2</zorder>
+   <zorder>rect</zorder>
+   <zorder>btn_reanudar</zorder>
+   <zorder>btn_volver_menu</zorder>
+   <zorder>btn_salir</zorder>
+   <zorder>btn_guardar</zorder>
+   <zorder>pausa</zorder>
   </widget>
  </widget>
  <resources/>

@@ -99,6 +99,7 @@
         <file>../Imagenes/Barras_vida_der/10.png</file>
         <file>../Imagenes/Barras_vida_der/11.png</file>
         <file>../Imagenes/Botones/boton volver al menu.png</file>
+        <file>../Imagenes/Menu/rectangulo.png</file>
     </qresource>
     <qresource prefix="/botones"/>
 </RCC>
