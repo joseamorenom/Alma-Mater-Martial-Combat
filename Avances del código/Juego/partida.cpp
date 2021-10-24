@@ -5,6 +5,7 @@
 #include <QString>
 #include <fstream>
 #include <iterator>
+#include <list>
 
 using namespace std;
 
@@ -15,42 +16,48 @@ partida::partida()
 
 void partida::guardarPartidaFinal()
 {
+   //Paso uno para "Va sacando la infoamcion del mapa y la deja en un archivo de texto"
    QString name;
-   int *arreglo[4];
-   map<QString,int(*)[4]>::iterator it = infoMap.begin();
+   QList<int> provisional;
+   map<QString,QList<int>>::iterator it = infoMap.begin();
    while (it != infoMap.end()){
        name = it->first;
-    //   arreglo = it->second;
-     //  guardarPartida(name, arreglo, arreglo+1, arreglo+2, arreglo+3);
+       provisional = it->second;
+       guardarPartida(name, provisional[0], provisional[1], provisional[2], provisional[3]);
        it++;
    }
 }
 
 void partida::guardarPartida(QString nombre, int nivel, int vidas, int tiempo, int posicion)
 {
+   //Pase dos para "Va sacando la infoamcion del mapa y la deja en un archivo de texto"
    string informacion;
    string auxiliar;
    informacion += nombre.toStdString();
-   informacion += "    ";
+   informacion += ' ';
    informacion += nombre.toStdString();
-   informacion += "    ";
+   informacion += ' ';
    informacion += to_string(nivel);
-   informacion += "    ";
+   informacion += ' ';
    informacion += to_string(vidas);
-   informacion += "    ";
+   informacion += ' ';
    informacion += to_string(tiempo);
-   informacion += "    ";
+   informacion += ' ';
    informacion += to_string(posicion);
    informacion += "\n";
-
-   ofstream out("historial.txt");
+   //lo abre y borra todo lo que hay
+   ofstream out("historial.txt", std::ofstream::out | std::ofstream::trunc);
    out<< informacion;
    out.close();
 }
 
 void partida::leerArchivo()
 {
-   int arreglo[4],cont;
+   //Lee el archivo y agrega al mapa las parejas que no existan aun en él
+   int cont;
+   QString nameq;
+   QList<int> listarchivo;
+   listarchivo.clear();
    ifstream ingreso;
    ingreso.open("historial.txt");
    string renglon,nombre,word;
@@ -59,31 +66,42 @@ void partida::leerArchivo()
            for (auto x : renglon) {
                    if (x == ' ')
                    {
-                       if (cont==0) nombre = word;
-                       else arreglo[cont-1] = stoi(word);
+                       if (cont==0) {
+                           nombre = word;
+                           nameq = QString::fromStdString(nombre);
+                       }
+                       else listarchivo.append(stoi(word));
                        cont++;
                        word = "";
                    }
                    else word = word + x;
                }
 
-           infoMap.insert(std::pair<QString,int(*)[4]>(QString::fromStdString(nombre),&arreglo));
-
+           if(infoMap.find(nameq)==infoMap.end()){
+           infoMap.insert(std::pair<QString,QList<int>>(QString::fromStdString(nombre),listarchivo));
+           }
    }
 }
 
 bool partida::nuevaPartida(QString nombre, int nivel, int vidas, int tiempo, int posicion)
 {
+   //Agrega una nueva pareja al mapa y
    //Revisar que no exista ya esa partida
-   bool result;
+   bool result = false;
    if(infoMap.find(nombre)==infoMap.end()){
-   int arreglo[4] = {nivel,vidas,tiempo,posicion};
-   infoMap.insert(std::pair<QString,int(*)[4]>(nombre,&arreglo));
+       lista.clear();
+       lista.append(nivel);
+       lista.push_back(vidas);
+       lista.push_back(tiempo);
+       lista.push_back(posicion);
+   infoMap.insert(std::pair<QString,QList<int>>(nombre,lista));
    result = true;
    }
    else result=false;
    return result;
-
 }
+
+
+
 
 

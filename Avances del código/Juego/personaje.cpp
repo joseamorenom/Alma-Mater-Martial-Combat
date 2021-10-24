@@ -94,6 +94,19 @@ void personaje::borde()
     }
 }
 
+void personaje::subida()
+{
+    jugador1.load(":/Imagenes/Personaje 1/Salto/1.png");
+    setPixmap(jugador1.scaled(130,300));
+}
+
+void personaje::bajada()
+{
+
+    jugador1.load(":/Imagenes/Personaje 1/Salto/2.png");
+    setPixmap(jugador1.scaled(130,300));
+}
+
 
 
 

@@ -12,6 +12,8 @@ public:
     void set_sprites();
     void sprites(short a);
     void borde();
+    void subida();
+    void bajada();
 private:
     QPixmap jugador1;
     QString movimiento[5]={":/Imagenes/Personaje 1/Caminando/1.png",":/Imagenes/Personaje 1/Caminando/2.png",":/Imagenes/Personaje 1/Caminando/3.png",":/Imagenes/Personaje 1/Caminando/4.png",":/Imagenes/Personaje 1/Caminando/5.png"};

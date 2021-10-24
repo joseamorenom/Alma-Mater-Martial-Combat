@@ -87,7 +87,38 @@ void enemigo::sprites_e2(short a)
         movimien[3] += (2*pos[3])-1;
         setPixmap(QPixmap(golpe_e2[movimien[3]]).scaled(160,327));
     break;
+    }
 }
+
+void enemigo::caida_libre_e2(float i)
+{
+
+        setPixmap(QPixmap(salto_e2[0]).scaled(160,327));
+        if(i>150){
+             setPixmap(QPixmap(salto_e2[1]).scaled(160,327));
+             if(i>250){
+                 setPixmap(QPixmap(salto_e2[2]).scaled(160,327));
+                  if(i>350){
+                     setPixmap(QPixmap(salto_e2[3]).scaled(160,327));
+                     if(i>350){
+                         setPixmap(QPixmap(salto_e2[3]).scaled(160,327));
+                     }
+                        if(i>450){
+                            setPixmap(QPixmap(salto_e2[4]).scaled(160,327));
+                     }
+                        if(i>=490){
+                                enemigo2.load(":/Imagenes/Enemigo 2/Parado/1.png");
+                                setPixmap(enemigo2.scaled(160,327));
+                        }
+                 }
+             }
+
+        }
+
+
 }
+
+
+
 
 

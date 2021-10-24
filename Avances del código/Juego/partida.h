@@ -1,12 +1,11 @@
 #ifndef PARTIDA_H
 #define PARTIDA_H
-#include <QObject>
-#include <QGraphicsPixmapItem>
 #include <iterator>
 #include <QString>
 #include <map>
+#include <QList>
 
-class partida: public QObject, public QGraphicsPixmapItem
+class partida
 {
 public:
    partida();
@@ -16,8 +15,10 @@ public:
    bool nuevaPartida(QString nombre, int nivel, int vidas, int tiempo, int posicion);
 
 private:
-   std::map<QString,int(*)[4]> infoMap;
+   std::map<QString,QList<int>> infoMap;
    QString infoarchivo;
+   QList <int> lista;
 };
-#endif // PARTIDA_H
 
+
+#endif // PARTIDA_H

@@ -30,10 +30,17 @@ MainWindow::MainWindow(QWidget *parent)
     timer= new QTimer(this);
     timer2=new QTimer(this);
     timer3=new QTimer(this);
+    timer4=new QTimer(this);
+    timer5=new QTimer(this);
+    timer6=new QTimer(this);
+    timer7=new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(nivel1_tiempo()));
     connect(timer2,SIGNAL(timeout()),this,SLOT(resorte()));
     connect(timer3,SIGNAL(timeout()),this,SLOT(resorte_derecha()));
-
+    connect(timer4,SIGNAL(timeout()),this,SLOT(resorte_j2_izq()));
+    connect(timer5,SIGNAL(timeout()),this,SLOT(resorte_j2_der()));
+    connect(timer6,SIGNAL(timeout()),this,SLOT(caida_libre_1j()));
+    connect(timer7,SIGNAL(timeout()),this,SLOT(caida_libre_multi()));
 
 
     set_ventana();
@@ -204,7 +211,7 @@ void MainWindow::on_btn_nueva_par_clicked()
     mapa1e->mapa1_vidaene();
     mapa1e->setPos(1090,0);
     nivel1->addItem(mapa1e);
-
+    h=ui->graphicsView->height();
 
 }
 
@@ -240,7 +247,7 @@ void MainWindow::on_btn_iniciar_clicked()
     multijugador->addItem(jugador);
     enemigo2 =new enemigo;
     enemigo2->set_sprites2();
-    enemigo2->setPos(1400,480);
+    enemigo2->setPos(1400,y3);
     multijugador->addItem(enemigo2);
     mapa2=new mapas;
     mapa2->mapa1_vidaper();
@@ -279,7 +286,8 @@ void MainWindow::nivel1_tiempo()
           ui->pausa->hide();
           ui->n_enemigo1->hide();
           ui->graphicsView->setScene(menu);
-          nivel1->removeItem(jugador);
+          nivel1->clear();
+          multijugador->clear();
           timer->stop();
           cont=90;
     }
@@ -291,7 +299,7 @@ void MainWindow::resorte()
     float resorte=0,a=30,desfase=0,w=0.2,xf;
        resorte=360+a*sin(w*i+desfase);
        xf=abs(360-resorte);
-       jugador->setPos(x1=xf,y1);
+       jugador->setPos(x1=xf,y1+10);
        i+=0.5;
        if(i>=10){
            timer2->stop();
@@ -307,12 +315,115 @@ void MainWindow::resorte_derecha()
         qDebug()<<resorte;
         qDebug()<<i;
              qDebug()<<"entro derecha";
-       jugador->setPos(x1=resorte,y1);
+       jugador->setPos(x1=resorte,y1+10);
        i-=0.5;
        if(i<=0){
            timer3->stop();
        }
 }
+
+void MainWindow::resorte_j2_izq()
+{
+
+    float resorte=0,a=30,desfase=0,w=0.2,xf;
+       resorte=360+a*sin(w*i+desfase);
+       xf=abs(360-resorte);
+       enemigo2->setPos(x3=xf,y3);
+       i+=0.5;
+       if(i>=10){
+           timer4->stop();
+       }
+}
+
+void MainWindow::resorte_j2_der()
+{
+    float resorte=0,a=30,w=0.2;
+        resorte=abs(((a*sin(w*i)+1400)));
+        qDebug()<<resorte;
+        qDebug()<<i;
+             qDebug()<<"entro derecha";
+       enemigo2->setPos(x3=resorte,y3);
+       i-=0.5;
+       if(i<=0){
+           timer5->stop();
+       }
+}
+
+void MainWindow::caida_libre_1j()
+{
+
+    jugador->subida();
+    float vyo=50, y2,g=10;
+    y2 = vyo*i*(0.001*T)-0.5*g*i*(0.001*T)*i*(0.001*T)+205;
+   // qDebug()<<y2;
+    //  y = yo+vyo*n*(0.001*T)-0.5*g*n*(0.001*T)*n*(0.001*T);
+    jugador->setPos(x1,int(abs(h-y2-300)));
+    qDebug()<<int(h-y2-300);
+    qDebug()<<"Contador"<<i;
+   /*
+    qDebug()<<int(h-y2-300);
+    qDebug()<<"Altura graphicsview"<<h;
+    qDebug()<<i;
+    */
+    i++;
+
+    if(i>=250){
+        jugador->bajada();
+    }
+    if(i>=503){
+     jugador->set_sprites();
+     timer6->stop();
+    }
+
+
+}
+
+void MainWindow::caida_libre_multi()
+{
+
+
+    float vyo=50, y2=0,g=10;
+    y2 = vyo*i*(0.001*T)-0.5*g*i*(0.001*T)*i*(0.001*T)+205;
+   // qDebug()<<y2;
+    //  y = yo+vyo*n*(0.001*T)-0.5*g*n*(0.001*T)*n*(0.001*T);
+    enemigo2->caida_libre_e2(i);
+    enemigo2->setPos(x3,int(abs(h-y2-327)));
+    qDebug()<<int(abs(h-y2-327));
+    qDebug()<<"Contador"<<i;
+
+   /*
+    qDebug()<<int(h-y2-300);
+    qDebug()<<"Altura graphicsview"<<h;
+    qDebug()<<i;
+    */
+    i++;
+    if(i>=515){
+     timer7->stop();
+/*
+    if(i>=250){
+        jugador->bajada();
+    }
+    if(i>=490){
+     jugador->set_sprites();
+     timer7->stop();
+    }
+    */
+}
+}
+/*
+void MainWindow::resorte_j2_izq()
+{
+
+    float resorte=0,a=30,desfase=0,w=0.2,xf;
+       resorte=360+a*sin(w*i+desfase);
+       xf=abs(360-resorte);
+       enemigo2->setPos(x3=xf,y3);
+       i+=0.5;
+       if(i>=10){
+           timer4->stop();
+       }
+}
+*/
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
 
@@ -324,8 +435,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         ui->pausa->setFont(QFont("Lucida Handwriting",26,QFont::Bold));
         ui->pausa->setText("Menu de pausa");
         ui->pausa->setGeometry(635,92,500,100);
-       // nivel1->addRect(480,100,600,620,pen,color);
-     //  multijugador->addRect(480,100,600,620,pen,color);
         ui->btn_reanudar->show();
         ui->btn_guardar->show();
         ui->btn_volver_menu->show();
@@ -336,10 +445,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         ui->btn_salir->setGeometry(620,575,354,130);
         ui->rect->show();
         ui->rect->setGeometry(480,100,600,620);
-       // ui->graphicsView->setGeometry(0,0,1900,1005);
     case Qt::Key_D:
         jugador->sprites('d');
-        jugador->setPos(x1=x1+20,y1);
+        jugador->setPos(x1=x1+20,y1+10);
         if(x1>=1440){
                qDebug()<<"Tocó el borde";
                timer3->start(50);
@@ -349,20 +457,19 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_A:
         jugador->sprites('a');
-        jugador->setPos(x1=x1-20,y1);
+        jugador->setPos(x1=x1-20,y1+10);
         if(x1<5){
-            qDebug()<<"Tocó el borde";
             timer2->start(50);
             i=0;
             resorte();
         }
 
-          //  jugador->borde();
-
         break;
     case Qt::Key_W:
-        jugador->sprites('w');
-        jugador->setPos(x1,y1=y1-10);
+        timer6->start(2);
+        i=0;
+        qDebug()<<y1;
+        caida_libre_1j();
         break;
 
     case Qt::Key_F:
@@ -375,14 +482,27 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
    case Qt::Key_L:
         enemigo2->sprites_e2('l');
         enemigo2->setPos(x3=x3+10,y3);
+        if(x3>=1420){
+               timer5->start(50);
+               i=10;
+               resorte_j2_der();
+           }
+
         break;
    case Qt::Key_J:
         enemigo2->sprites_e2('j');
         enemigo2->setPos(x3=x3-10,y3);
+        if(x3<5){
+            timer4->start(50);
+            i=0;
+            resorte_j2_izq();
+        }
+
         break;
    case Qt::Key_I:
-        enemigo2->sprites_e2('i');
-        enemigo2->setPos(x3,y3=y3-10);
+        timer7->start(2);
+        i=0;
+        caida_libre_multi();
         break;
    case Qt::Key_P:
         enemigo2->sprites_e2('p');
@@ -451,7 +571,8 @@ MainWindow::~MainWindow()
     delete timer;
     delete timer2;
     delete timer3;
-
+    delete timer4;
+    delete timer5;
 
     delete nivel1;
     delete nivel2;
@@ -464,9 +585,6 @@ MainWindow::~MainWindow()
     delete mapa2e;
     delete mapa1;
     delete mapa1e;
-
-
-
 }
 
 
@@ -480,7 +598,5 @@ void MainWindow::on_btn_reanudar_clicked()
     ui->btn_salir->hide();
     ui->pausa->hide();
     ui->rect->hide();
-   // nivel1->removeItem(rect);
-
 }
 
