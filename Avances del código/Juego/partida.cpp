@@ -101,20 +101,16 @@ bool partida::nuevaPartida(QString nombre, int nivel, int vidas, int tiempo, int
    return result;
 }
 
-void partida::vida_ene1(bool colision_je)
+int partida::vida_ene1(bool colision_je)
 {
-
-     qDebug()<<cont_vidas_ene1;
     if (colision_je==true){
             cont_vidas_ene1+=1;
-            setPixmap(QPixmap(barras_vida_der[5]).scaled(450,100));
+            qDebug()<<"Contador "<<cont_vidas_ene1;
+            setPixmap(QPixmap(barras_vida_der[cont_vidas_ene1]).scaled(380,80));
     }
+    return cont_vidas_ene1;
 }
 
-void partida::imprimir_vidas_ene1(int contador)
-{
-  //  qDebug()<<"Las vidas son: "<<contador;
-}
 
 void partida::inicializar_partida()
 {

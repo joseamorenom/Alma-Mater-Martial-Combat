@@ -10,6 +10,7 @@ public:
     mapas();
     void mapa1_vidaper();
     void mapa1_vidaene();
+    void mapa2_vidaene();
 
 
 private:

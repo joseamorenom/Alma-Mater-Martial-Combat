@@ -76,13 +76,15 @@ private slots:
 
     void on_btn_cancelar_clicked();
 
+    void nivel2_tiempo();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *menu,*nivel1,*nivel2,*multijugador;
     QPixmap Fondo_menu;
     QLCDNumber *lcdNumber;
     QWidget *centralwidget;
-    QTimer *timer,*timer2,*timer3,*timer4,*timer5,*timer6,*timer7;
+    QTimer *timer,*timer2,*timer3,*timer4,*timer5,*timer6,*timer7,*n2timer;
     QMessageBox *mensaje;
     personaje *jugador;
     enemigo *enemigo1,*enemigo2;
@@ -92,8 +94,8 @@ private:
     QLabel *nombre_ene1,rect;
     QString nombre_usuario;
     QLine *usuario;
-    int x1=0,y1=500,x3=1400,y3=410,pos0xper=0,pos0yper=500,T=20,h,contador;
-    bool colision_je;
+    int x1=0,y1=500,x3=1400,y3=410,pos0xper=0,pos0yper=500,T=20,h,contador,pasar_nivel,contn2=60;
+    bool colision_je,colision_je1;
     float y2;
     float i=0,resorte2,g=-9.81;
     partida *dat_partida;
