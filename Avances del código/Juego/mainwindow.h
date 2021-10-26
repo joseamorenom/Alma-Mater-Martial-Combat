@@ -18,6 +18,7 @@
 #include "personaje.h"
 #include "enemigo.h"
 #include "mapas.h"
+#include "partida.h"
 using namespace std;
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -71,6 +72,10 @@ private slots:
 
     void on_btn_reanudar_clicked();
 
+    void on_btn_aceptar_clicked();
+
+    void on_btn_cancelar_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *menu,*nivel1,*nivel2,*multijugador;
@@ -82,11 +87,17 @@ private:
     personaje *jugador;
     enemigo *enemigo1,*enemigo2;
     mapas *mapa1,*mapa1e,*mapa2,*mapa2e;
+    QThread *hilo;
     int cont=90;
     QLabel *nombre_ene1,rect;
-    int x1=0,y1=500,x3=1400,y3=410,pos0xper=0,pos0yper=500,T=20,h;
+    QString nombre_usuario;
+    QLine *usuario;
+    int x1=0,y1=500,x3=1400,y3=410,pos0xper=0,pos0yper=500,T=20,h,contador;
+    bool colision_je;
     float y2;
     float i=0,resorte2,g=-9.81;
+    partida *dat_partida;
+    partida *vidas_ene1;
 
 };
 #endif // MAINWINDOW_H
