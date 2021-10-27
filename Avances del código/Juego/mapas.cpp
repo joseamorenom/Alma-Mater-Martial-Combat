@@ -13,7 +13,7 @@ void mapas::mapa1_vidaene()
 
 void mapas::mapa2_vidaene()
 {
-    mapa2.load(":/Imagenes/Barras_vida_izq/1.png");
+    mapa2.load(":/Imagenes/Barras_vida_der/1.png");
     setPixmap(mapa2.scaled(380,80));
 }
 

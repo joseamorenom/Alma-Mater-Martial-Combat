@@ -80,7 +80,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QGraphicsScene *menu,*nivel1,*nivel2,*multijugador;
+    QGraphicsScene *menu,*nivel1,*nivel2,*multijugador,*ganador;
     QPixmap Fondo_menu;
     QLCDNumber *lcdNumber;
     QWidget *centralwidget;
@@ -94,12 +94,12 @@ private:
     QLabel *nombre_ene1,rect;
     QString nombre_usuario;
     QLine *usuario;
-    int x1=0,y1=500,x3=1400,y3=410,pos0xper=0,pos0yper=500,T=20,h,contador,pasar_nivel,contn2=60;
-    bool colision_je,colision_je1;
+    int x1=0,y1=500,x3=1400,y3=475,pos0xper=0,pos0yper=500,T=20,h,contador,pasar_nivel,contn2=60,timerid,ganadormulti,contadorn2,contmulti,contj1j2,vida_j2;
+    bool colision_je,colision_je1,colision_je2,colision_j1j2;
     float y2;
     float i=0,resorte2,g=-9.81;
     partida *dat_partida;
-    partida *vidas_ene1;
+    partida *vidas_ene1,*vidas_ene2,*vidas_j1,*vidas_j2;
 
 };
 #endif // MAINWINDOW_H

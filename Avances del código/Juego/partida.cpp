@@ -104,17 +104,82 @@ bool partida::nuevaPartida(QString nombre, int nivel, int vidas, int tiempo, int
 int partida::vida_ene1(bool colision_je)
 {
     if (colision_je==true){
+
+
             cont_vidas_ene1+=1;
-            qDebug()<<"Contador "<<cont_vidas_ene1;
+            qDebug()<<"Contador nivel 1"<<cont_vidas_ene1;
             setPixmap(QPixmap(barras_vida_der[cont_vidas_ene1]).scaled(380,80));
-    }
+
+
+
+}
     return cont_vidas_ene1;
 }
 
+int partida::vidas_multi_j2(bool colision_j1j2)
+{
+    if (colision_j1j2==true){
 
+
+            cont_vidas_multi_j2+=1;
+            qDebug()<<"Contador nivel 1"<<cont_vidas_multi_j2;
+            setPixmap(QPixmap(barras_vida_der[cont_vidas_multi_j2]).scaled(380,80));
+
+
+
+}
+    return cont_vidas_multi_j2;
+}
+
+/*
+int partida::vida_ene2(bool colision_je)
+{
+
+    if (colision_je==true){
+            cont_vidas_ene1+=1;
+            qDebug()<<"Contador "<<cont_vidas_ene1;
+            setPixmap(QPixmap(barras_vida_der[cont_vidas_ene1-11]).scaled(380,80));
+    }
+
+    return cont_vidas_ene1;
+}
+
+*/
 void partida::inicializar_partida()
 {
     cont_vidas_ene1=0;
+}
+
+void partida::inicializar_nivel2()
+{
+    cont_vidas_ene1=12;
+}
+
+int partida::vida_jugador_multi(bool colision_je2)
+{
+
+    if (colision_je2==true){
+
+
+            cont_vidas_multi_j1+=1;
+            qDebug()<<"Contador multi"<<cont_vidas_multi_j1;
+            setPixmap(QPixmap(barras_vida_izq[cont_vidas_multi_j1]).scaled(380,80));
+
+
+
+}
+    return cont_vidas_multi_j1;
+}
+
+
+void partida::inicializar_multi()
+{
+    cont_vidas_multi_j1=0;
+}
+
+void partida::inicializar_multi_j2()
+{
+    cont_vidas_multi_j2=0;
 }
 
 

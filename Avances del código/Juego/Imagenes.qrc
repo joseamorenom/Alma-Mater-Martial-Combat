@@ -100,6 +100,7 @@
         <file>../Imagenes/Barras_vida_izq/9.png</file>
         <file>../Imagenes/Barras_vida_izq/10.png</file>
         <file>../Imagenes/Barras_vida_izq/11.png</file>
+        <file>../Imagenes/Fondos/Ganador.png</file>
     </qresource>
     <qresource prefix="/botones"/>
 </RCC>
