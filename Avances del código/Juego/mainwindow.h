@@ -60,6 +60,10 @@ private slots:
 
     void resorte_j2_der();
 
+    void resorte_e1_izq();
+
+    void resorte_e1_der();
+
     void caida_libre_1j();
 
     void caida_libre_multi();
@@ -67,8 +71,6 @@ private slots:
     void on_btn_guardar_clicked();
 
     void on_btn_volver_menu_clicked();
-
-
 
     void on_btn_reanudar_clicked();
 
@@ -78,13 +80,23 @@ private slots:
 
     void nivel2_tiempo();
 
+    void mov_izq_cpu1();
+
+    void mov_der_cpu1();
+
+    void golpe_cpu1();
+
+    void on_btn_cargar_par_clicked();
+
+    void on_btn_aceptar_2_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *menu,*nivel1,*nivel2,*multijugador,*ganador;
     QPixmap Fondo_menu;
     QLCDNumber *lcdNumber;
     QWidget *centralwidget;
-    QTimer *timer,*timer2,*timer3,*timer4,*timer5,*timer6,*timer7,*n2timer;
+    QTimer *timer,*timer2,*timer3,*timer4,*timer5,*timer6,*timer7,*n2timer,*cpu1,*timerrese2,*timercpu1g,*timcpu1der,*timresder1;
     QMessageBox *mensaje;
     personaje *jugador;
     enemigo *enemigo1,*enemigo2;
@@ -92,14 +104,15 @@ private:
     QThread *hilo;
     int cont=90;
     QLabel *nombre_ene1,rect;
-    QString nombre_usuario;
+    QString nombre_usuario,nombre_cargar;
     QLine *usuario;
-    int x1=0,y1=500,x3=1400,y3=475,pos0xper=0,pos0yper=500,T=20,h,contador,pasar_nivel,contn2=60,timerid,ganadormulti,contadorn2,contmulti,contj1j2,vida_j2;
-    bool colision_je,colision_je1,colision_je2,colision_j1j2;
+    int x1=0,y1=500,x3=1400,y3=475,pos0xper=0,pos0yper=500,T=20,h,contador,pasar_nivel,contn2=60,timerid,ganadormulti,contadorn2,contmulti,contj1j2,vida_j2,x2=1400,e2y2=700;
+    int cont_golpe_cpu1,cont_mov_der,contadore1j1,vida_j1n1,cont_nivel,vidas,tiempo_lvl,posjug,contadore2n2;
+    bool colision_je,colision_je1,colision_je2,colision_j1j2,colision_e1j1;
     float y2;
-    float i=0,resorte2,g=-9.81;
+    float i=0,resorte2,g=-9.81,i2;
     partida *dat_partida;
-    partida *vidas_ene1,*vidas_ene2,*vidas_j1,*vidas_j2;
+    partida *vidas_ene1,*vidas_ene2,*vidas_j1,*vidas_j2,*vidas_j1e1;
 
 };
 #endif // MAINWINDOW_H

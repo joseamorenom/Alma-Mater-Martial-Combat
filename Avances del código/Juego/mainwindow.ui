@@ -358,6 +358,19 @@ color: rgb(0, 255, 0);</string>
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="btn_aceptar_2">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>430</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Aceptar</string>
+    </property>
+   </widget>
    <zorder>graphicsView</zorder>
    <zorder>btn_1_jug</zorder>
    <zorder>btn_multi</zorder>
@@ -379,6 +392,7 @@ color: rgb(0, 255, 0);</string>
    <zorder>btn_cancelar</zorder>
    <zorder>ingresar_usuario</zorder>
    <zorder>n_jugador1</zorder>
+   <zorder>btn_aceptar_2</zorder>
   </widget>
  </widget>
  <resources/>
