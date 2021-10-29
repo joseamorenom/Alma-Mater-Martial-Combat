@@ -30,7 +30,7 @@ private:
     QString muerte_e1[4]={":/Imagenes/Enemigo 1/Muerte/1.png",":/Imagenes/Enemigo 1/Muerte/2.png",":/Imagenes/Enemigo 1/Muerte/3.png",":/Imagenes/Enemigo 1/Muerte/4.png"};
     QString salto_e1[2]={":/Imagenes/Enemigo 1/Saltar/1.png",":/Imagenes/Enemigo 1/Saltar/2.png"};
     QString golpe_e1[3]={":/Imagenes/Enemigo 1/Golpe/1.png",":/Imagenes/Enemigo 1/Golpe/2.png",":/Imagenes/Enemigo 1/Golpe/3.png"};
-    QString patada_e1[2]={":/Imagenes/Enemigo 1/Patada/1.png",":/Imagenes/Enemigo 1/Patada/2.png"};
+    QString patada_e1[3]={":/Imagenes/Enemigo 1/Patada/1.png",":/Imagenes/Enemigo 1/Patada/2.png",":/Imagenes/Enemigo 1/Patada/3.png"};
 
     short movimien[5];
     bool pos[5];

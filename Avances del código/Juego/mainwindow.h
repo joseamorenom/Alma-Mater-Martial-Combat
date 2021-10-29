@@ -107,12 +107,12 @@ private:
     QString nombre_usuario,nombre_cargar;
     QLine *usuario;
     int x1=0,y1=500,x3=1400,y3=475,pos0xper=0,pos0yper=500,T=20,h,contador,pasar_nivel,contn2=60,timerid,ganadormulti,contadorn2,contmulti,contj1j2,vida_j2,x2=1400,e2y2=700;
-    int cont_golpe_cpu1,cont_mov_der,contadore1j1,vida_j1n1,cont_nivel,vidas,tiempo_lvl,posjug,contadore2n2;
+    int cont_golpe_cpu1,cont_mov_der,contadore1j1,vida_j1n1,cont_nivel,vidas,tiempo_lvl,posjug,contadore2n2,vida_j2_golpe;
     bool colision_je,colision_je1,colision_je2,colision_j1j2,colision_e1j1;
     float y2;
     float i=0,resorte2,g=-9.81,i2;
     partida *dat_partida;
-    partida *vidas_ene1,*vidas_ene2,*vidas_j1,*vidas_j2,*vidas_j1e1;
+    partida *vidas_ene1,*vidas_ene2,*vidas_j1,*vidas_j2,*vidas_j1e1,*vida_multi_g;
 
 };
 #endif // MAINWINDOW_H

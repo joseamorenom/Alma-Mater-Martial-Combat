@@ -199,11 +199,8 @@ int partida::vida_ene1(bool colision_je)
 
 
             cont_vidas_ene1+=1;
-            qDebug()<<"Contador 1 jugador"<<cont_vidas_ene1;
+            qDebug()<<"Contador 1 jugador ene1"<<cont_vidas_ene1;
             setPixmap(QPixmap(barras_vida_der[cont_vidas_ene1]).scaled(380,80));
-
-
-
 }
     return cont_vidas_ene1;
 }
@@ -216,27 +213,10 @@ int partida::vidas_multi_j2(bool colision_j1j2)
             cont_vidas_multi_j2+=1;
             qDebug()<<"Contador nivel 1"<<cont_vidas_multi_j2;
             setPixmap(QPixmap(barras_vida_der[cont_vidas_multi_j2]).scaled(380,80));
-
-
-
 }
     return cont_vidas_multi_j2;
 }
 
-/*
-int partida::vida_ene2(bool colision_je)
-{
-
-    if (colision_je==true){
-            cont_vidas_ene1+=1;
-            qDebug()<<"Contador "<<cont_vidas_ene1;
-            setPixmap(QPixmap(barras_vida_der[cont_vidas_ene1-11]).scaled(380,80));
-    }
-
-    return cont_vidas_ene1;
-}
-
-*/
 void partida::inicializar_partida()
 {
     cont_vidas_ene1=0;
@@ -286,7 +266,7 @@ int partida::vida_jugador1(bool colision_e1j1)
 
 
             cont_vidas_jugador1+=1;
-            qDebug()<<"Contador jugador 1"<<cont_vidas_jugador1;
+            qDebug()<<"Contador jugador 1 ju1"<<cont_vidas_jugador1;
             setPixmap(QPixmap(barras_vida_izq[cont_vidas_jugador1]).scaled(380,80));
 
 

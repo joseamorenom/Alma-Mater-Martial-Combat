@@ -134,15 +134,15 @@ void enemigo::mov_izq_e1()
 void enemigo::golpe()
 {
 
-    int a=1+rand()%10;
+    int a=2+rand()%10;
     qDebug()<<"Numero aleatorio "<<a;
-    /*if(a==7||a==9||a==3||a==1){
-        a=4;
-    }
-    */
+
+
+    qDebug()<<"Nuevo numero aleatorio "<<a;
     int condic=a%2;
     if(condic==0){
-               qDebug()<<"Numero par";
+        if (a<6){
+               qDebug()<<"Puño cpu";
 
         if(movimien[3] == 2){
             pos[3] = false;
@@ -153,9 +153,23 @@ void enemigo::golpe()
 
         movimien[3] += (2*pos[3])-1;
         setPixmap(QPixmap(golpe_e1[movimien[3]]).scaled(160,327));
+}
+        else{
+            qDebug()<<"Patada cpu";
 
+            if(movimien[3] == 2){
+                pos[3] = false;
+            }
+            else if (movimien[4] == 0){
+                pos[3] = true;
+            }
+
+            movimien[3] += (2*pos[3])-1;
+            setPixmap(QPixmap(patada_e1[movimien[3]]).scaled(130,300));
+
+        }
     }
-
+/*
     else{
         qDebug()<<"Numero impar";
 
@@ -170,7 +184,7 @@ void enemigo::golpe()
         setPixmap(QPixmap(patada_e1[movimien[3]]).scaled(130,300));
 
     }
-
+*/
 
 }
 
