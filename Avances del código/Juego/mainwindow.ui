@@ -371,6 +371,54 @@ color: rgb(0, 255, 0);</string>
      <string>Aceptar</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="btn_contr_rules">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>0</y>
+      <width>171</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/Imagenes/Botones/Reglas y controles.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_controles">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>50</y>
+      <width>181</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/Imagenes/Botones/controles.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_reglas">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>500</y>
+      <width>211</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/Imagenes/Botones/reglas.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
    <zorder>graphicsView</zorder>
    <zorder>btn_1_jug</zorder>
    <zorder>btn_multi</zorder>
@@ -393,6 +441,9 @@ color: rgb(0, 255, 0);</string>
    <zorder>ingresar_usuario</zorder>
    <zorder>n_jugador1</zorder>
    <zorder>btn_aceptar_2</zorder>
+   <zorder>btn_contr_rules</zorder>
+   <zorder>btn_controles</zorder>
+   <zorder>btn_reglas</zorder>
   </widget>
  </widget>
  <resources/>

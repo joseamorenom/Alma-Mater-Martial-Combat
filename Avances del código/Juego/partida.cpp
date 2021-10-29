@@ -1,9 +1,9 @@
 #include "partida.h"
 #include <QString>
 #include <QVariant>
+#include <QList> //Nueva
 #include <string>
 #include <QString>
-#include <fstream>
 #include <iterator>
 #include <list>
 
@@ -27,14 +27,14 @@ void partida::guardarPartidaFinal()
    while (it != infoMap.end()){
        name = it->first;
        provisional = it->second;
-       informacion = guardarPartida(name, provisional[0], provisional[1], provisional[2], provisional[3],informacion);
+       informacion = guardarPartida(name, provisional[0], provisional[1], provisional[2], provisional[3], provisional[4], informacion);
        it++;
    }
    out<<informacion;
    out.close();
 }
 
-std::string partida::guardarPartida(QString nombre, int nivel, int vidas, int tiempo, int posicion, string informacion)
+std::string partida::guardarPartida(QString nombre, int nivel, int vidas, int tiempo, int posicion, int vidasenem, string informacion)
 {
    //Pase dos para "Va sacando la infoamcion del mapa y la deja en un archivo de texto"
 
@@ -48,11 +48,12 @@ std::string partida::guardarPartida(QString nombre, int nivel, int vidas, int ti
    informacion += to_string(tiempo);
    informacion += ' ';
    informacion += to_string(posicion);
+   informacion += ' ';
+   informacion += to_string(vidasenem);
    informacion += "*";
    informacion += "\n";
    return informacion;
 }
-
 
 void partida::leerArchivo()
 {
@@ -92,7 +93,9 @@ void partida::leerArchivo()
                                word.clear();
                                if(infoMap.find(nameq)==infoMap.end()){
                                infoMap.insert(std::pair<QString,QList<int>>(QString::fromStdString(nombre),listarchivo));
-                               renglon.clear();}
+                               renglon.clear();
+                               }
+                               listarchivo.clear();
                        }
                        else word = word + x;
 
@@ -104,8 +107,7 @@ void partida::leerArchivo()
 }
 
 
-
-bool partida::nuevaPartida(QString nombre, int nivel, int vidas, int tiempo, int posicion)
+bool partida::nuevaPartida(QString nombre, int nivel, int vidas, int tiempo, int posicion,  int vidasenem)
 {
    //Agrega una nueva pareja al mapa y
    //Revisar que no exista ya esa partida
@@ -117,6 +119,7 @@ bool partida::nuevaPartida(QString nombre, int nivel, int vidas, int tiempo, int
        lista.push_back(vidas);
        lista.push_back(tiempo);
        lista.push_back(posicion);
+       lista.push_back(vidasenem);
    infoMap.insert(std::pair<QString,QList<int>>(nombre,lista));
    result = true;
    }
@@ -126,7 +129,7 @@ bool partida::nuevaPartida(QString nombre, int nivel, int vidas, int tiempo, int
    return result;
 }
 
-void partida::actualizarPart(QString nombre, int nivel, int vidas, int tiempo, int posicion)
+void partida::actualizarPart(QString nombre, int nivel, int vidas, int tiempo, int posicion, int vidasenem)
 {
    //Se llama cuando un jugador que ya existe vuelve a jugar y a guardar su informacion
    std::map<QString,QList<int>>::iterator itr;
@@ -137,6 +140,7 @@ void partida::actualizarPart(QString nombre, int nivel, int vidas, int tiempo, i
        lista.push_back(vidas);
        lista.push_back(tiempo);
        lista.push_back(posicion);
+       lista.push_back(vidasenem);
        itr->second = lista;
    }
 }
@@ -152,7 +156,6 @@ bool partida::revisarVacio()
    }
    else return false;
 }
-
 
 int partida::nivel(QString nombre)
 {
@@ -190,16 +193,20 @@ int partida::posicion(QString nombre)
    return lista[3];
 }
 
-
+int partida::vidasenem(QString nombre)
+{
+   QList<int> lista;
+   map<QString,QList<int>>::iterator it;
+   it = infoMap.find(nombre);
+   lista = it->second;
+   return lista[4];
+}
 
 
 int partida::vida_ene1(bool colision_je)
 {
     if (colision_je==true){
-
-
-            cont_vidas_ene1+=1;
-            qDebug()<<"Contador 1 jugador ene1"<<cont_vidas_ene1;
+        cont_vidas_ene1+=1;
             setPixmap(QPixmap(barras_vida_der[cont_vidas_ene1]).scaled(380,80));
 }
     return cont_vidas_ene1;
@@ -211,7 +218,6 @@ int partida::vidas_multi_j2(bool colision_j1j2)
 
 
             cont_vidas_multi_j2+=1;
-            qDebug()<<"Contador nivel 1"<<cont_vidas_multi_j2;
             setPixmap(QPixmap(barras_vida_der[cont_vidas_multi_j2]).scaled(380,80));
 }
     return cont_vidas_multi_j2;
@@ -234,7 +240,6 @@ int partida::vida_jugador_multi(bool colision_je2)
 
 
             cont_vidas_multi_j1+=1;
-            qDebug()<<"Contador multi"<<cont_vidas_multi_j1;
             setPixmap(QPixmap(barras_vida_izq[cont_vidas_multi_j1]).scaled(380,80));
 
 
@@ -266,7 +271,6 @@ int partida::vida_jugador1(bool colision_e1j1)
 
 
             cont_vidas_jugador1+=1;
-            qDebug()<<"Contador jugador 1 ju1"<<cont_vidas_jugador1;
             setPixmap(QPixmap(barras_vida_izq[cont_vidas_jugador1]).scaled(380,80));
 
 

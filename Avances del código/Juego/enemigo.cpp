@@ -135,6 +135,45 @@ void enemigo::golpe()
 {
 
     int a=2+rand()%10;
+
+    int condic=a%2;
+    if(condic==0){
+        if (a<6){
+
+
+        if(movimien[3] == 2){
+            pos[3] = false;
+        }
+        else if (movimien[3] == 0){
+            pos[3] = true;
+        }
+
+        movimien[3] += (2*pos[3])-1;
+        setPixmap(QPixmap(golpe_e1[movimien[3]]).scaled(160,327));
+}
+        else{
+
+
+            if(movimien[3] == 2){
+                pos[3] = false;
+            }
+            else if (movimien[4] == 0){
+                pos[3] = true;
+            }
+
+            movimien[3] += (2*pos[3])-1;
+            setPixmap(QPixmap(patada_e1[movimien[3]]).scaled(130,300));
+
+        }
+    }
+
+
+}
+
+void enemigo::golpe_cpu2()
+{
+
+    int a=2+rand()%10;
     qDebug()<<"Numero aleatorio "<<a;
 
 
@@ -152,7 +191,7 @@ void enemigo::golpe()
         }
 
         movimien[3] += (2*pos[3])-1;
-        setPixmap(QPixmap(golpe_e1[movimien[3]]).scaled(160,327));
+        setPixmap(QPixmap(golpe_e2[movimien[3]]).scaled(160,327));
 }
         else{
             qDebug()<<"Patada cpu";
@@ -165,29 +204,24 @@ void enemigo::golpe()
             }
 
             movimien[3] += (2*pos[3])-1;
-            setPixmap(QPixmap(patada_e1[movimien[3]]).scaled(130,300));
+            setPixmap(QPixmap(patada_e2[movimien[3]]).scaled(130,300));
 
         }
     }
-/*
-    else{
-        qDebug()<<"Numero impar";
-
-        if(movimien[3] == 2){
-            pos[3] = false;
-        }
-        else if (movimien[4] == 0){
-            pos[3] = true;
-        }
-
-        movimien[3] += (2*pos[3])-1;
-        setPixmap(QPixmap(patada_e1[movimien[3]]).scaled(130,300));
-
-    }
-*/
-
 }
 
+void enemigo::mov_izq_e2()
+    {
+            if(movimien[3] == 2){
+                pos[3] = false;
+            }
+            else if (movimien[3] == 0){
+                pos[3] = true;
+            }
+
+            movimien[3] += (2*pos[3])-1;
+            setPixmap(QPixmap(movimiento_e2[movimien[3]]).scaled(160,327));
+    }
 
 
 

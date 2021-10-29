@@ -102,6 +102,18 @@
         <file>../Imagenes/Barras_vida_izq/11.png</file>
         <file>../Imagenes/Fondos/Ganador.png</file>
         <file>../Imagenes/Enemigo 1/Patada/3.png</file>
+        <file>../Imagenes/Fondos/Game over.gif</file>
+        <file>../Imagenes/Menu/GAME RULES.jpg</file>
+        <file>../Imagenes/Menu/menuControles.png</file>
+        <file>../Imagenes/Botones/controles.png</file>
+        <file>../Imagenes/Botones/Reglas y controles.png</file>
+        <file>../Imagenes/Botones/reglas.png</file>
+        <file>../Imagenes/Personaje 1/Poder/Bola 1.png</file>
+        <file>../Imagenes/Personaje 1/Poder/Bola 2.png</file>
+        <file>../Imagenes/Personaje 1/Poder/Bola 3.png</file>
+        <file>../Imagenes/Personaje 1/Poder/Jugador 1.png</file>
+        <file>../Imagenes/Personaje 1/Poder/Jugador 2.png</file>
+        <file>../Imagenes/Personaje 1/Poder/Jugador 3.png</file>
     </qresource>
     <qresource prefix="/botones"/>
 </RCC>

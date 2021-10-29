@@ -1,3 +1,4 @@
+//hola
 #ifndef ENEMIGO_H
 #define ENEMIGO_H
 #include <QObject>
@@ -17,8 +18,10 @@ public:
     void sprites_e2(short a);
     void caida_libre_e2(float i);
     void mov_izq_e1();
-
+    void mov_izq_e2();
     void golpe();
+    void golpe_cpu2();
+
 private:
     QPixmap enemigo1,enemigo2;
     QString movimiento_e2[5]={":/Imagenes/Enemigo 2/Caminando/1.png",":/Imagenes/Enemigo 2/Caminando/2.png",":/Imagenes/Enemigo 2/Caminando/3.png",":/Imagenes/Enemigo 2/Caminando/4.png",":/Imagenes/Enemigo 2/Caminando/5.png"};

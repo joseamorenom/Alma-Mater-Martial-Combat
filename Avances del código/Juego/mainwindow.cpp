@@ -39,8 +39,14 @@ MainWindow::MainWindow(QWidget *parent)
     timercpu1g= new QTimer(this);
     timcpu1der=new QTimer(this);
     timresder1=new QTimer(this);
+    timercpu2izq= new QTimer(this);
+    timebola = new QTimer;
+    timresder2=new QTimer(this);
     cpu1=new QTimer(this);
     n2timer=new QTimer(this);
+    timercpu2g=new QTimer(this);
+    timercpu2der=new QTimer(this);
+    timeresizq2=new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(nivel1_tiempo()));
     connect(timer2,SIGNAL(timeout()),this,SLOT(resorte()));
     connect(timer3,SIGNAL(timeout()),this,SLOT(resorte_derecha()));
@@ -54,10 +60,20 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timercpu1g,SIGNAL(timeout()),this,SLOT(golpe_cpu1()));
     connect(timcpu1der,SIGNAL(timeout()),this,SLOT(mov_der_cpu1()));
     connect(timresder1,SIGNAL(timeout()),this,SLOT(resorte_e1_der()));
+    connect(timercpu2izq,SIGNAL(timeout()),this,SLOT(mov_izq_cpu2()));
+    connect(timercpu2g,SIGNAL(timeout()),this,SLOT(golpe_cpu2()));
+    connect(timercpu2der,SIGNAL(timeout()),this,SLOT(mov_der_cpu2()));
+    connect(timresder2,SIGNAL(timeout()),this,SLOT(resorte_e2_der()));
+    connect(timeresizq2,SIGNAL(timeout()),this,SLOT(resorte_e2_izq()));
+    connect(timebola,SIGNAL(timeout()),this,SLOT(simulacion()));
     set_ventana();
+    ui->btn_contr_rules->show();
     ui->btn_1_jug->setGeometry(1550/2-110,820/2-120,200,80);
     ui->btn_multi->setGeometry(1550/2-110,820/2-35,200,80);
     ui->btn_salir->setGeometry(1550/2-115,820/2+50,210,85);
+    ui->btn_contr_rules->setGeometry(1550/2-115,820/2+128,220,85);
+    ui->btn_reglas->hide();
+    ui->btn_controles->hide();
     ui->btn_nueva_par->hide();
     ui->btn_cargar_par->hide();
     ui->btn_volver->hide();
@@ -103,6 +119,9 @@ void MainWindow::on_btn_1_jug_clicked()
     ui->ingrese_nom->hide();
     ui->ingresar_usuario->hide();
     ui->btn_aceptar_2->hide();
+    ui->btn_reglas->hide();
+    ui->btn_controles->hide();
+    ui->btn_contr_rules->hide();
     ui->btn_nueva_par->show();
     ui->btn_cargar_par->show();
     ui->btn_volver->show();
@@ -152,6 +171,9 @@ void MainWindow::on_btn_volver_clicked()
     ui->btn_aceptar->hide();
     ui->btn_cancelar->hide();
     ui->ingrese_nom->hide();
+    ui->btn_reglas->hide();
+    ui->btn_controles->hide();
+    ui->btn_contr_rules->hide();
     ui->ingresar_usuario->clear();
     ui->graphicsView->setScene(menu);
     ui->btn_aceptar_2->hide();
@@ -181,6 +203,9 @@ void MainWindow::on_btn_multi_clicked()
     ui->ingrese_nom->hide();
     ui->ingresar_usuario->hide();
     ui->btn_aceptar_2->hide();
+    ui->btn_reglas->hide();
+    ui->btn_controles->hide();
+    ui->btn_contr_rules->hide();
 }
 
 
@@ -204,6 +229,9 @@ void MainWindow::on_btn_nueva_par_clicked()
     ui->rect->hide();
     ui->btn_nueva_par->hide();
     ui->btn_volver->hide();
+    ui->btn_reglas->hide();
+    ui->btn_controles->hide();
+    ui->btn_contr_rules->hide();
     ui->ingresar_usuario->clear();
     ui->ingrese_nom->show();
     ui->ingresar_usuario->show();
@@ -237,6 +265,9 @@ void MainWindow::on_btn_iniciar_clicked()
        ui->n_enemigo1_2->hide();
        ui->btn_aceptar_2->hide();
        ui->rect->hide();
+       ui->btn_reglas->hide();
+       ui->btn_controles->hide();
+       ui->btn_contr_rules->hide();
        ui->lcdNumber->show();
        ui->lcdNumber->setGeometry(750,10,100,35);
        ui->graphicsView->setGeometry(0,0,1900,1005);
@@ -282,31 +313,38 @@ void MainWindow::nivel1_tiempo()
     cont-=1;
     tiempo_lvl=cont;
     if(cont<=0){
+          menu->setBackgroundBrush(QImage(":/Imagenes/Fondos/Game over.gif").scaled(1550,820));
           mensaje=new QMessageBox;
           QMessageBox::information(this,"Alma Mater Martial Combat","Se acabó el tiempo, perdiste. \nVolverás al menu.");
-          ui->lcdNumber->hide();
-          menu->setBackgroundBrush(QImage(":/Imagenes/Menu/Fondo_menu.png").scaled(1550,820));
-          ui->btn_1_jug->show();
-          ui->btn_multi->show();
+          ui->btn_1_jug->hide();
+          ui->btn_multi->hide();
           ui->btn_salir->show();
-          ui->btn_1_jug->setGeometry(1550/2-110,820/2-120,200,80);
-          ui->btn_multi->setGeometry(1550/2-110,820/2-35,200,80);
           ui->btn_salir->setGeometry(1550/2-115,820/2+50,210,85);
           ui->btn_nueva_par->hide();
           ui->btn_cargar_par->hide();
           ui->btn_volver->hide();
           ui->btn_iniciar->hide();
           ui->lcdNumber->hide();
+          ui->n_enemigo1->hide();
           ui->btn_reanudar->hide();
           ui->btn_guardar->hide();
-          ui->btn_volver_menu->hide();
+          ui->btn_volver_menu->show();
+          ui->btn_volver_menu->setGeometry(1550/2-110,820/2-35,200,80);
+          ui->ingrese_nom->hide();
+          ui->ingresar_usuario->hide();
+          ui->btn_aceptar_2->hide();
+          ui->n_jugador1->hide();
+          ui->n_enemigo1_2->hide();
           ui->pausa->hide();
-          ui->n_enemigo1->hide();
+          ui->rect->hide();
+          ui->btn_reglas->hide();
+          ui->btn_controles->hide();
+          ui->btn_contr_rules->hide();
+          x1=0;
+          y1=500;
+          x3=1400;
+          y3=480;
           ui->graphicsView->setScene(menu);
-          nivel1->clear();
-          multijugador->clear();
-          timer->stop();
-          cont=90;
     }
 }
 
@@ -375,15 +413,37 @@ void MainWindow::resorte_e1_der()
        resorte=abs(((a*sin(w*i)+1400)));
        enemigo1->setPos(x2=resorte,e2y2-225);
        i2-=0.5;
-     //  qDebug()<<"contadr resorte 1 "<<i;
-  //     qDebug()<<"Parar resorte derecha 1";
-       if(i2<=0){
-     //      qDebug()<<"Parar resorte derecha 2";
            cont_golpe_cpu1=0;
            timcpu1der->stop();
            timresder1->stop();
            cpu1->start(200);
        }
+
+
+void MainWindow::resorte_e2_der()
+{
+    float resorte=0,a=30,w=0.2;
+       resorte=abs(((a*sin(w*i)+1400)));
+       enemigo2->setPos(poscpu2=resorte,y3);
+       i2-=0.5;
+
+       if(i2<=0){
+           timercpu2der->stop();
+           timresder2->stop();
+           timercpu2izq->start(120);
+       }
+}
+
+void MainWindow::resorte_e2_izq()
+{
+    float resorte=0,a=30,desfase=0,w=0.2,xf;
+      resorte=360+a*sin(w*i+desfase);
+      xf=abs(360-resorte);
+      enemigo2->setPos(poscpu2=xf,y3-200);
+      i+=0.5;
+      if(i>=10){
+          timerrese2->stop();
+      }
 }
 
 void MainWindow::caida_libre_1j()
@@ -406,8 +466,6 @@ void MainWindow::caida_libre_multi()
 {
     float vyo=50, y2=0,g=10;
     y2 = vyo*i*(0.001*T)-0.5*g*i*(0.001*T)*i*(0.001*T)+205;
-   // qDebug()<<y2;
-    //  y = yo+vyo*n*(0.001*T)-0.5*g*n*(0.001*T)*n*(0.001*T);
     enemigo2->caida_libre_e2(i);
     enemigo2->setPos(x3,int(abs(h-y2-327)));
     i++;
@@ -419,6 +477,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key()){
         case Qt::Key_Escape:
+        timercpu2g->stop();
+        timercpu2der->stop();
+        timeresizq2->stop();
         ui->pausa->show();
         timer->stop();
         ui->pausa->setFont(QFont("Lucida Handwriting",26,QFont::Bold));
@@ -435,11 +496,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         ui->rect->show();
         ui->rect->setGeometry(480,100,600,620);
         cpu1->stop();
+        timcpu1der->stop();
     case Qt::Key_D:
         jugador->sprites('d');
         jugador->setPos(x1=x1+20,y1+10);
         if(x1>=1440){
-               qDebug()<<"Tocó el borde";
                timer3->start(50);
                i=10;
                resorte_derecha();
@@ -459,30 +520,22 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     case Qt::Key_W:
         timer6->start(2);
         i=0;
-        qDebug()<<y1;
         caida_libre_1j();
         break;
 
     case Qt::Key_F:
-
-        jugador->sprites('f');
-   //     jugador->collidesWithItem(enemigo1);
+        jugador->sprites('f'); 
         colision_je=jugador->collidesWithItem(enemigo1);  //colision jugador-enemigo1
         colision_j1j2=jugador->collidesWithItem(enemigo2);
-
-        qDebug()<<"Timer n2: "<<timerid;
-     //   qDebug()<<"Colision multi "<<colision_j1j2;
-
         if(colision_j1j2==true){
            timerid=0;
            contj1j2++;
 }
         if(contj1j2%2==0){
-          qDebug()<<"Timer n2: "<<timerid;
+            mapa2e->hide();
          vida_j2=vidas_j2->vidas_multi_j2(colision_j1j2);
-        qDebug()<<"Vida jugador 2 "<<vida_j2;
            vidas_j2->setPos(1155,15);
-           mapa2e->hide();
+
         }
         if(vida_j2==11){
 
@@ -493,12 +546,13 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         ui->n_enemigo1_2->hide();
         timer->stop();
         ui->lcdNumber->hide();
+        ui->btn_reglas->hide();
+        ui->btn_controles->hide();
+        ui->btn_contr_rules->hide();
         ganador->setSceneRect(0,0,1898,1003);
         ganador->setBackgroundBrush(QImage(":/Imagenes/Fondos/Ganador.png").scaled(1550,820));
         ui->graphicsView->setScene(ganador);
 }
-       // colision_je2=jugador->collidesWithItem(enemigo2); //colision jugador-enemigo2, es para el segundo nivel
-       // qDebug()<<colision_je2;
         if(colision_je==true){
 
         contador++;
@@ -506,7 +560,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         if(contador%2==0){
          mapa1e->hide();
          pasar_nivel=vidas_ene1->vida_ene1(colision_je);
-        qDebug()<<"Pasar nivel: "<<pasar_nivel;
            vidas_ene1->setPos(1152,15);
         }
 
@@ -514,66 +567,72 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 
         if(pasar_nivel==11){
-            pasar_nivel=1;
-            timer->stop();
-            cont_nivel=2;
-            nivel1->removeItem(jugador);
-            nivel1->removeItem(mapa1e);
-            nivel1->removeItem(mapa1);
-            nivel1->removeItem(vidas_ene1);
-            nivel1->removeItem(enemigo1);
-            vidas_j1e1->inicializar_cpu1();
-            vidas_j1e1->inicializar_multi();
-            nivel2->addItem(vidas_ene1);
-            vidas_j1e1= new partida;
-            nivel2->addItem(vidas_j1e1);
-            nivel1->disconnect();
-            enemigo1->disconnect();
-            vidas_ene1=new partida;
-            contn2=60;
-            n2timer->start(1000);
-            timerid=startTimer(1000);
-            qDebug()<<"Timer n2: "<<timerid;
-            nombre_usuario=ui->ingresar_usuario->toPlainText();
-            qDebug()<<nombre_usuario;
-            nivel2->setSceneRect(0,0,1898,1003);
-            nivel2->setBackgroundBrush(QImage(":/Imagenes/Fondos/FondoUdeA.jpeg").scaled(1550,820));
-            ui->graphicsView->setScene(nivel2);
-            ui->n_enemigo1->show();
-            ui->n_enemigo1->setFont(QFont("Lucida Calligraphy",22,QFont::Bold));
-            ui->n_enemigo1->setText(nombre_usuario);
-            ui->n_enemigo1->setGeometry(50,-20,500,100);
-            ui->n_enemigo1_2->setFont(QFont("Lucida Calligraphy",22,QFont::Bold));
-            ui->n_enemigo1_2->show();
-            ui->n_enemigo1_2->setFont(QFont("Lucida Calligraphy",22,QFont::Bold));
-            ui->n_enemigo1_2->setText("Augusto");
-            ui->n_enemigo1_2->setGeometry(1340,-20,500,100);
-            nivel2->addItem(jugador);
-            jugador->set_sprites();
-            jugador->setPos(pos0xper,pos0yper);
-            enemigo2 =new enemigo;
-            enemigo1=new enemigo;
-            enemigo2->set_sprites2();
-            enemigo2->setPos(1400,y3);
+     p = new bola();
+            pasar_nivel+=1;
+            nivel2->addItem(p);
+            timercpu1g->stop();
+            cpu1->stop();
+            timcpu1der->stop();
+            timercpu2izq->start(70);
 
-           // nivel2->addItem(enemigo1);
-            nivel2->addItem(enemigo2);
-            mapa2= new mapas;
-            mapa2->mapa1_vidaper();
-            mapa2->setPos(0,15);
-            nivel2->addItem(mapa2);
-            mapa2e=new mapas;
-            mapa2e->mapa2_vidaene();
-            mapa2e->setPos(1152,15);
-            nivel2->addItem(mapa2e);
-            nivel2->addItem(vidas_ene1);
-            vidas_ene1->inicializar_partida();
-            contj1j2=1;
-            qDebug()<<"pasar nivel inicial"<<pasar_nivel;
+                    nivel1->removeItem(jugador);
+                    nivel1->removeItem(mapa1e);
+                    cont_nivel=2;
+                    nivel1->removeItem(mapa1);
+                    contadorn2=0;
+                    timer->stop();
+                    contn2=60;
+                    n2timer->start(1000);
+                    timerid=startTimer(1000);
+                    cont_mov_der_cpu2=1;
+                    nombre_usuario=ui->ingresar_usuario->toPlainText();
+                    nivel2->setSceneRect(0,0,1898,1003);
+                    nivel2->setBackgroundBrush(QImage(":/Imagenes/Fondos/FondoUdeA.jpeg").scaled(1550,820));
+                    ui->graphicsView->setScene(nivel2);
+                    ui->n_jugador1->show();
+                    ui->n_jugador1->setFont(QFont("Lucida Calligraphy",22,QFont::Bold));
+                    ui->n_jugador1->setText(nombre_usuario);
+                    ui->n_jugador1->setGeometry(50,-20,500,100);
+                    ui->n_enemigo1_2->setFont(QFont("Lucida Calligraphy",22,QFont::Bold));
+                    ui->n_enemigo1_2->show();
+                    ui->n_enemigo1_2->setFont(QFont("Lucida Calligraphy",22,QFont::Bold));
+                    ui->n_enemigo1_2->setText("Augusto");
+                    ui->n_enemigo1_2->setGeometry(1340,-20,500,100);
+                    vidas_ene1=new partida;
+                    vidas_j2=new partida;
+                    vidas_j1=new partida;
+                    vidaj1cpu2=new partida;
+                    nivel2->addItem(vidas_j1);
+                    nivel2->addItem(vidas_j2);
+                    nivel2->addItem(vidas_ene1);
+                    nivel2->addItem(vidaj1cpu2);
+                    vidaj1cpu2->inicializar_cpu1();
+                    vidas_ene1->inicializar_partida();
+                    vidas_j2->inicializar_multi_j2();
+                    cont_golpe_cpu2j2=1;
+                    x1=0;
+                    jugador= new personaje;
+                    nivel2->addItem(jugador);
+                    jugador->set_sprites();
+                    jugador->setPos(pos0xper,pos0yper);
+                    enemigo2 =new enemigo;
+                    enemigo2->set_sprites2();
+                    enemigo2->setPos(poscpu2,y3);
+                    nivel2->addItem(enemigo2);
+                    mapa2= new mapas;
+                    mapa2->mapa1_vidaper();
+                    mapa2->setPos(0,15);
+                    nivel2->addItem(mapa2);
+                    mapa2e=new mapas;
+                    mapa2e->mapa2_vidaene();
+                    mapa2e->setPos(1152,15);
+                    nivel2->addItem(mapa2e);
+
+
 
         }
      }
-        if(timerid==3){
+        if(timerid==5){
             nivel2->clear();
             multijugador->clear();
             nivel1->clear();
@@ -582,6 +641,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             qDebug()<<"Ganaste";
             n2timer->stop();
             ui->lcdNumber->hide();
+            ui->pausa->show();
+            ui->pausa->setFont(QFont("Lucida Calligraphy",30,QFont::Bold));
+            ui->pausa->setText("Ganaste");
+            ui->pausa->setGeometry(1340,-20,500,100);
             ganador->setSceneRect(0,0,1898,1003);
             ganador->setBackgroundBrush(QImage(":/Imagenes/Fondos/Ganador.png").scaled(1550,820));
             ui->graphicsView->setScene(ganador);
@@ -598,32 +661,56 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         jugador->sprites('q');
         colision_je=jugador->collidesWithItem(enemigo1);  //colision jugador-enemigo1
         colision_je2=jugador->collidesWithItem(enemigo2);
-       // colision_je1=jugador->collidesWithItem(enemigo2);
-
+    if(cont_nivel==1||cont_nivel==2){
         if(colision_je==true){
          contador++;
         }
     if(contador%3==0){
-    qDebug()<<"Prueba 1";
+     mapa1e->hide();
+     pasar_nivel=vidas_ene1->vida_ene1(colision_je);
+     vidas_ene1->setPos(1152,15);
+     if(colision_je2==true){
+         contadore2n2++;
+
+     }
+
+     if(contadore2n2%3==0){
+           //mapa2e->hide();
+         vida_j2=vidas_j2->vidas_multi_j2(colision_j1j2);
+    //    qDebug()<<"Vida jugador 2 golpe "<<vida_j2;
+           vidas_j2->setPos(1155,15);
+
+     }
+
+}
+    }
+    else{
+      //  qDebug()<<"Nivel "<<cont_nivel;
+        if(colision_je==true){
+         contador++;
+        }
+    if(contador%3){
+
+  //  qDebug()<<"Prueba 2";
      mapa1e->hide();
      pasar_nivel=vidas_ene1->vida_ene1(colision_je);
      vidas_ene1->setPos(1152,15);
 
 }
-
-
     if(colision_je2==true){
         contadore2n2++;
 
     }
-    if(contadore2n2%3){
-          mapa2e->hide();
+
+    if(contadore2n2%3==0){
+         // mapa2e->hide();
         vida_j2=vidas_j2->vidas_multi_j2(colision_j1j2);
-       qDebug()<<"Vida jugador 2 golpe "<<vida_j2;
+    //   qDebug()<<"Vida jugador 2 golpe "<<vida_j2;
           vidas_j2->setPos(1155,15);
 
     }
 
+}
     if(vida_j2==11){
 
 
@@ -644,55 +731,97 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     }
 
 */
+    if(timerid==5){
+        nivel2->clear();
+        multijugador->clear();
+        nivel1->clear();
+        ui->n_jugador1->hide();
+        ui->n_enemigo1_2->hide();
+        qDebug()<<"Ganaste";
+        n2timer->stop();
+        ui->lcdNumber->hide();
+        ui->pausa->show();
+        ui->pausa->setFont(QFont("Lucida Calligraphy",30,QFont::Bold));
+        ui->pausa->setText("Ganaste");
+        ui->pausa->setGeometry(1340,0,500,100);
+        ganador->setSceneRect(0,0,1898,1003);
+        ganador->setBackgroundBrush(QImage(":/Imagenes/Fondos/Ganador.png").scaled(1550,820));
+        ui->graphicsView->setScene(ganador);
 
+
+    }
     if(pasar_nivel==11){
-        pasar_nivel+=1;
-        nivel1->removeItem(jugador);
-        nivel1->removeItem(mapa1e);
-        cont_nivel=2;
-        nivel1->removeItem(mapa1);
-        contadorn2=0;
-        timer->stop();
-        vidas_ene1->inicializar_partida();
-        contn2=60;
-        n2timer->start(1000);
-        timerid=startTimer(1000);
-        nombre_usuario=ui->ingresar_usuario->toPlainText();
-        qDebug()<<nombre_usuario;
-        nivel2->setSceneRect(0,0,1898,1003);
-        nivel2->setBackgroundBrush(QImage(":/Imagenes/Fondos/FondoUdeA.jpeg").scaled(1550,820));
-        ui->graphicsView->setScene(nivel2);
-        ui->n_jugador1->show();
-        ui->n_jugador1->setFont(QFont("Lucida Calligraphy",22,QFont::Bold));
-        ui->n_jugador1->setText(nombre_usuario);
-        ui->n_jugador1->setGeometry(50,-20,500,100);
-        ui->n_enemigo1_2->setFont(QFont("Lucida Calligraphy",22,QFont::Bold));
-        ui->n_enemigo1_2->show();
-        ui->n_enemigo1_2->setFont(QFont("Lucida Calligraphy",22,QFont::Bold));
-        ui->n_enemigo1_2->setText("Augusto");
-        ui->n_enemigo1_2->setGeometry(1340,-20,500,100);
-        vidas_ene1=new partida;
-        jugador= new personaje;
-        nivel2->addItem(jugador);
-        jugador->set_sprites();
-        jugador->setPos(pos0xper,pos0yper);
+        p = new bola();
+               pasar_nivel+=1;
+               nivel2->addItem(p);
+               timercpu1g->stop();
+               cpu1->stop();
+               timcpu1der->stop();
+               timercpu2izq->start(70);
 
-        enemigo2 =new enemigo;
-        enemigo2->set_sprites2();
-        enemigo2->setPos(1400,y3);
-        nivel2->addItem(enemigo2);
-        mapa2= new mapas;
-        mapa2->mapa1_vidaper();
-        mapa2->setPos(0,15);
-        nivel2->addItem(mapa2);
-        mapa2e=new mapas;
-        mapa2e->mapa2_vidaene();
-        mapa2e->setPos(1152,15);
-        nivel2->addItem(mapa2e);
+                       nivel1->removeItem(jugador);
+                       nivel1->removeItem(mapa1e);
+                       cont_nivel=2;
+                       nivel1->removeItem(mapa1);
+                       contadorn2=0;
+                       timer->stop();
+                       contn2=60;
+                       n2timer->start(1000);
+                       timerid=startTimer(1000);
+                     //  qDebug()<<"timerid "<<timerid;
+                       cont_mov_der_cpu2=1;
+                       nombre_usuario=ui->ingresar_usuario->toPlainText();
+                       qDebug()<<nombre_usuario;
+                       nivel2->setSceneRect(0,0,1898,1003);
+                       nivel2->setBackgroundBrush(QImage(":/Imagenes/Fondos/FondoUdeA.jpeg").scaled(1550,820));
+                       ui->graphicsView->setScene(nivel2);
+                       ui->n_jugador1->show();
+                       ui->n_jugador1->setFont(QFont("Lucida Calligraphy",22,QFont::Bold));
+                       ui->n_jugador1->setText(nombre_usuario);
+                       ui->n_jugador1->setGeometry(50,-20,500,100);
+                       ui->n_enemigo1_2->setFont(QFont("Lucida Calligraphy",22,QFont::Bold));
+                       ui->n_enemigo1_2->show();
+                       ui->n_enemigo1_2->setFont(QFont("Lucida Calligraphy",22,QFont::Bold));
+                       ui->n_enemigo1_2->setText("Augusto");
+                       ui->n_enemigo1_2->setGeometry(1340,-20,500,100);
+                       vidas_ene1=new partida;
+                       vidas_j2=new partida;
+                       vidas_j1=new partida;
+                       vidaj1cpu2=new partida;
+                       nivel2->addItem(vidas_j1);
+                       nivel2->addItem(vidas_j2);
+                       nivel2->addItem(vidas_ene1);
+                       nivel2->addItem(vidaj1cpu2);
+                       vidaj1cpu2->inicializar_cpu1();
+                       vidas_ene1->inicializar_partida();
+                       vidas_j2->inicializar_multi_j2();
+                       cont_golpe_cpu2j2=1;
+                       x1=0;
+                       jugador= new personaje;
+                       nivel2->addItem(jugador);
+                       jugador->set_sprites();
+                       jugador->setPos(pos0xper,pos0yper);
+                       enemigo2 =new enemigo;
+                       enemigo2->set_sprites2();
+                       enemigo2->setPos(poscpu2,y3);
+                       nivel2->addItem(enemigo2);
+                       mapa2= new mapas;
+                       mapa2->mapa1_vidaper();
+                       mapa2->setPos(0,15);
+                       nivel2->addItem(mapa2);
+                       mapa2e=new mapas;
+                       mapa2e->mapa2_vidaene();
+                       mapa2e->setPos(1152,15);
+                       nivel2->addItem(mapa2e);
+
+
 
 
 
     }
+    case Qt::Key_X:
+        iniciarbola();
+        cont_bola=0;
         break;
    case Qt::Key_L:
         enemigo2->sprites_e2('l');
@@ -763,7 +892,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::on_btn_guardar_clicked()
 {
-     dat_partida->actualizarPart(nombre_usuario,cont_nivel,vidas,tiempo_lvl,posjug);
+     dat_partida->actualizarPart(nombre_usuario,cont_nivel,vidas,tiempo_lvl,posjug,pasar_nivel);
      n2timer->stop();
      timer->stop();
      menu->setBackgroundBrush(QImage(":/Imagenes/Menu/Fondo_menu.png").scaled(1550,820));
@@ -776,6 +905,9 @@ void MainWindow::on_btn_guardar_clicked()
      ui->btn_nueva_par->hide();
      ui->btn_cargar_par->hide();
      ui->btn_volver->hide();
+     ui->btn_reglas->hide();
+     ui->btn_controles->hide();
+     ui->btn_contr_rules->hide();
      ui->btn_iniciar->hide();
      ui->lcdNumber->hide();
      ui->n_enemigo1->hide();
@@ -818,8 +950,13 @@ void MainWindow::on_btn_volver_menu_clicked()
      ui->ingrese_nom->hide();
      ui->ingresar_usuario->hide();
      ui->n_jugador1->hide();
+     ui->btn_reglas->hide();
+     ui->btn_controles->hide();
+     ui->btn_contr_rules->hide();
      ui->n_enemigo1_2->hide();
      ui->btn_aceptar_2->hide();
+     ui->btn_contr_rules->show();
+     ui->btn_contr_rules->setGeometry(1550/2-115,820/2+128,220,85);
      ui->pausa->hide();
      ui->rect->hide();
      //remove enemigo 1,2, jugador
@@ -862,6 +999,11 @@ void MainWindow::on_btn_reanudar_clicked()
     ui->pausa->hide();
     ui->rect->hide();
     ui->btn_aceptar_2->hide();
+    ui->btn_reglas->hide();
+    ui->btn_controles->hide();
+    ui->btn_contr_rules->hide();
+    cpu1->start();
+    timeresizq2->start();
 }
 
 
@@ -876,6 +1018,7 @@ void MainWindow::on_btn_aceptar_clicked()
         qDebug()<<nombre_usuario;
         ui->btn_nueva_par->hide();
         ui->btn_cargar_par->hide();
+        p = new bola();
         ui->btn_1_jug->hide();
         ui->btn_multi->hide();
         ui->btn_salir->hide();
@@ -890,6 +1033,9 @@ void MainWindow::on_btn_aceptar_clicked()
         ui->btn_cancelar->hide();
         ui->ingrese_nom->hide();
         ui->ingresar_usuario->hide();
+        ui->btn_reglas->hide();
+        ui->btn_controles->hide();
+        ui->btn_contr_rules->hide();
         ui->ingresar_usuario->setDisabled(true);
         ui->lcdNumber->show();
         ui->graphicsView->setGeometry(0,0,1900,1005);
@@ -899,7 +1045,7 @@ void MainWindow::on_btn_aceptar_clicked()
         ui->n_jugador1->show();
         ui->n_jugador1->setFont(QFont("Lucida Calligraphy",22,QFont::Bold));
         ui->n_jugador1->setText(nombre_usuario);
-        ui->n_jugador1->setGeometry(50,-20,500,100);
+        ui->n_jugador1->setGeometry(50,-33,500,100);
         ui->n_enemigo1_2->setFont(QFont("Lucida Calligraphy",22,QFont::Bold));
         ui->n_enemigo1_2->show();
         ui->n_enemigo1_2->setFont(QFont("Lucida Calligraphy",22,QFont::Bold));
@@ -908,6 +1054,7 @@ void MainWindow::on_btn_aceptar_clicked()
         ui->lcdNumber->setGeometry(700,10,100,35);
         jugador= new personaje;
         nivel1->addItem(jugador);
+        nivel1->addItem(p);
         jugador->set_sprites();
         jugador->setPos(pos0xper,pos0yper);
         enemigo1 =new enemigo;
@@ -925,6 +1072,7 @@ void MainWindow::on_btn_aceptar_clicked()
         nivel1->addItem(mapa1e);
         h=ui->graphicsView->height();
         timerid=0;
+        i=0;
         vidas_ene1=new partida;
         vidas_j1e1= new partida;
         vidas_j1e1->inicializar_cpu1();
@@ -934,12 +1082,12 @@ void MainWindow::on_btn_aceptar_clicked()
         vidas_j2->inicializar_multi_j2();
         nivel1->addItem(vidas_j2);
         nivel1->addItem(vidas_j1e1);
-
+        cont_mov_der=0;
         vidas_j1e1->inicializar_multi_j2();
         cont_nivel=1;
         vidas=11;
         tiempo_lvl=90;
-        dat_partida->nuevaPartida(nombre_usuario,cont_nivel,vidas,tiempo_lvl,pos0xper);
+        dat_partida->nuevaPartida(nombre_usuario,cont_nivel,vidas,tiempo_lvl,pos0xper,pasar_nivel);
         contadore1j1=0;
         i2=10;
 }
@@ -960,6 +1108,9 @@ void MainWindow::on_btn_cancelar_clicked()
     ui->btn_aceptar->hide();
     ui->btn_cancelar->hide();
     ui->ingrese_nom->hide();
+    ui->btn_reglas->hide();
+    ui->btn_controles->hide();
+    ui->btn_contr_rules->hide();
     ui->ingresar_usuario->clear();
     ui->ingresar_usuario->hide();
     ui->btn_nueva_par->show();
@@ -977,34 +1128,38 @@ void MainWindow::nivel2_tiempo()
     contn2-=1;
     tiempo_lvl=contn2;
     if(contn2<=0){
+          menu->setBackgroundBrush(QImage(":/Imagenes/Fondos/Game over.gif").scaled(1550,820));
           mensaje=new QMessageBox;
           QMessageBox::information(this,"Alma Mater Martial Combat","Se acabó el tiempo, perdiste. \nVolverás al menu.");
-          ui->lcdNumber->hide();
-          menu->setBackgroundBrush(QImage(":/Imagenes/Menu/Fondo_menu.png").scaled(1550,820));
-          ui->n_enemigo1->hide();
-          ui->n_enemigo1_2->hide();
-          ui->n_jugador1->hide();
-          ui->btn_1_jug->show();
-          ui->btn_multi->show();
+          ui->btn_1_jug->hide();
+          ui->btn_multi->hide();
           ui->btn_salir->show();
-          ui->btn_1_jug->setGeometry(1550/2-110,820/2-120,200,80);
-          ui->btn_multi->setGeometry(1550/2-110,820/2-35,200,80);
           ui->btn_salir->setGeometry(1550/2-115,820/2+50,210,85);
           ui->btn_nueva_par->hide();
           ui->btn_cargar_par->hide();
           ui->btn_volver->hide();
           ui->btn_iniciar->hide();
           ui->lcdNumber->hide();
+          ui->n_enemigo1->hide();
           ui->btn_reanudar->hide();
           ui->btn_guardar->hide();
-          ui->btn_volver_menu->hide();
+          ui->btn_reglas->hide();
+          ui->btn_controles->hide();
+          ui->btn_contr_rules->hide();
+          ui->btn_volver_menu->show();
+          ui->btn_volver_menu->setGeometry(1550/2-110,820/2-35,200,80);
+          ui->ingrese_nom->hide();
+          ui->ingresar_usuario->hide();
+          ui->btn_aceptar_2->hide();
+          ui->n_jugador1->hide();
+          ui->n_enemigo1_2->hide();
           ui->pausa->hide();
-          ui->n_enemigo1->hide();
+          ui->rect->hide();
+          x1=0;
+          y1=500;
+          x3=1400;
+          y3=480;
           ui->graphicsView->setScene(menu);
-          nivel1->clear();
-          multijugador->clear();
-          timer->stop();
-          contn2=60;
     }
 }
 
@@ -1027,7 +1182,6 @@ void MainWindow::mov_izq_cpu1()
 
 void MainWindow::mov_der_cpu1()
 {
-   // qDebug()<<"Mover a la derecha";
     cont_mov_der+=1;
      enemigo1->mov_izq_e1();
      i=10;
@@ -1037,7 +1191,6 @@ void MainWindow::mov_der_cpu1()
          timcpu1der->stop();
      }
      if(x2>=1440){
-            qDebug()<<"Tocó el borde";
             timresder1->start(50);
 
             resorte_e1_der();
@@ -1050,7 +1203,6 @@ void MainWindow::mov_der_cpu1()
 void MainWindow::golpe_cpu1()
 {
     cont_golpe_cpu1+=1;
-    qDebug()<<"Entro a golpe";
     enemigo1->golpe();
     if (cont_golpe_cpu1>7){
         timercpu1g->stop();
@@ -1065,7 +1217,7 @@ void MainWindow::golpe_cpu1()
      vida_j1n1=vidas_j1e1->vida_jugador1(colision_e1j1);
      vidas=vida_j1n1;
      mapa1->hide();
-    qDebug()<<"Vida jugador 2 "<<vida_j1n1;
+  // qDebug()<<"Vida jugador 2 "<<vida_j1n1;
        vidas_j1e1->setPos(0,15);
       // mapa2e->hide();
     }
@@ -1075,12 +1227,10 @@ void MainWindow::golpe_cpu1()
          n2timer->stop();
          timer->stop();
          cont=90;
-         menu->setBackgroundBrush(QImage(":/Imagenes/Menu/Fondo_menu.png").scaled(1550,820));
-         ui->btn_1_jug->show();
-         ui->btn_multi->show();
+         menu->setBackgroundBrush(QImage(":/Imagenes/Fondos/Game over.gif").scaled(1550,820));
+         ui->btn_1_jug->hide();
+         ui->btn_multi->hide();
          ui->btn_salir->show();
-         ui->btn_1_jug->setGeometry(1550/2-110,820/2-120,200,80);
-         ui->btn_multi->setGeometry(1550/2-110,820/2-35,200,80);
          ui->btn_salir->setGeometry(1550/2-115,820/2+50,210,85);
          ui->btn_nueva_par->hide();
          ui->btn_cargar_par->hide();
@@ -1090,10 +1240,14 @@ void MainWindow::golpe_cpu1()
          ui->n_enemigo1->hide();
          ui->btn_reanudar->hide();
          ui->btn_guardar->hide();
-         ui->btn_volver_menu->hide();
+         ui->btn_volver_menu->show();
+         ui->btn_volver_menu->setGeometry(1550/2-110,820/2-35,200,80);
          ui->ingrese_nom->hide();
          ui->ingresar_usuario->hide();
          ui->btn_aceptar_2->hide();
+         ui->btn_reglas->hide();
+         ui->btn_controles->hide();
+         ui->btn_contr_rules->hide();
          ui->n_jugador1->hide();
          ui->n_enemigo1_2->hide();
          ui->pausa->hide();
@@ -1106,6 +1260,24 @@ void MainWindow::golpe_cpu1()
     }
 
 }
+
+void MainWindow::mov_izq_cpu2()
+{
+    enemigo2->mov_izq_e2();
+    enemigo2->setPos(poscpu2=poscpu2-25,y3);
+    if(poscpu2<x1+100){
+        timercpu2izq->stop();
+        timercpu2g->start(200);
+
+
+    }
+    if(x2<5){
+        timerrese2->start(50);
+        i=0;
+
+    }
+}
+
 
 void MainWindow::on_btn_cargar_par_clicked()
 {
@@ -1121,6 +1293,9 @@ void MainWindow::on_btn_cargar_par_clicked()
     ui->pausa->hide();
     ui->rect->hide();
     ui->btn_nueva_par->hide();
+    ui->btn_reglas->hide();
+    ui->btn_controles->hide();
+    ui->btn_contr_rules->hide();
     ui->btn_volver->hide();
     ui->ingresar_usuario->clear();
     ui->ingrese_nom->show();
@@ -1158,4 +1333,202 @@ void MainWindow::on_btn_aceptar_2_clicked()
         qDebug()<<"Vidas"<<vidasj1;
         qDebug()<<"Tiempo"<<tiempo;
         qDebug()<<"posicion"<<posicion;
+}
+
+void MainWindow::on_btn_contr_rules_clicked()
+{
+    ui->btn_nueva_par->hide();
+    ui->btn_cargar_par->hide();
+    ui->btn_1_jug->hide();
+    ui->btn_multi->hide();
+    ui->btn_salir->hide();
+    ui->btn_volver->hide();
+    ui->btn_iniciar->hide();
+    ui->btn_reanudar->hide();
+    ui->btn_guardar->hide();
+    ui->btn_volver_menu->hide();
+    ui->n_enemigo1_2->hide();
+    ui->btn_aceptar_2->hide();
+    ui->rect->hide();
+    ui->btn_contr_rules->hide();
+    ui->btn_reglas->show();
+    ui->btn_controles->show();
+    ui->btn_controles->setGeometry(1550/2-110,820/2-100,220,100);
+    ui->btn_reglas->setGeometry(1550/2-110,820/2+20,220,90);
+
+}
+
+void MainWindow::on_btn_reglas_clicked()
+{
+
+    ui->btn_volver_menu->show();
+    ui->btn_volver_menu->setGeometry(1550/2+500,30,220,100);
+    ui->btn_nueva_par->hide();
+    ui->btn_cargar_par->hide();
+    ui->btn_1_jug->hide();
+    ui->btn_multi->hide();
+    ui->btn_salir->hide();
+    ui->btn_volver->hide();
+    ui->btn_iniciar->hide();
+    ui->btn_reanudar->hide();
+    ui->btn_guardar->hide();
+    ui->n_enemigo1_2->hide();
+    ui->btn_aceptar_2->hide();
+    ui->rect->hide();
+    ui->btn_contr_rules->hide();
+    ui->btn_reglas->hide();
+    ui->btn_controles->hide();
+    ui->graphicsView->setGeometry(0,0,1900,1005);
+    menu->setSceneRect(0,0,1898,1003);
+    menu->setBackgroundBrush(QImage(":/Imagenes/Menu/GAME RULES.jpg").scaled(1550,820));
+    ui->graphicsView->setScene(menu);
+}
+
+void MainWindow::on_btn_controles_clicked()
+{
+    ui->btn_volver_menu->show();
+    ui->btn_volver_menu->setGeometry(1550/2,650,220,100);
+    ui->btn_nueva_par->hide();
+    ui->btn_cargar_par->hide();
+    ui->btn_1_jug->hide();
+    ui->btn_multi->hide();
+    ui->btn_salir->hide();
+    ui->btn_volver->hide();
+    ui->btn_iniciar->hide();
+    ui->btn_reanudar->hide();
+    ui->btn_guardar->hide();
+    ui->n_enemigo1_2->hide();
+    ui->btn_aceptar_2->hide();
+    ui->rect->hide();
+    ui->btn_contr_rules->hide();
+    ui->btn_reglas->hide();
+    ui->btn_controles->hide();
+    ui->graphicsView->setGeometry(0,0,1900,1005);
+    menu->setSceneRect(0,0,1898,1003);
+    menu->setBackgroundBrush(QImage(":/Imagenes/Menu/menuControles.png").scaled(1550,820));
+
+    ui->graphicsView->setScene(menu);
+}
+
+void MainWindow::golpe_cpu2()
+{
+   cont_golpe_cpu2j2+=1;
+    //qDebug()<<"Entro a golpe cpu2";
+    enemigo2->golpe_cpu2();
+    enemigo2->setPos(poscpu2,y3+5);
+
+    if (cont_golpe_cpu2j2>13){
+        timercpu2g->stop();
+       timercpu2der->start(120);
+    }
+    colision_cpu2j1=enemigo2->collidesWithItem(jugador);
+    if(colision_cpu2j1==true){
+       cont_golpe_cpu2j2++;
+}
+    if(cont_golpe_cpu2j2%2==0){
+     vida_j1n2=vidaj1cpu2->vida_jugador1(colision_cpu2j1);
+     vida_j1n2tot=vida_j1n2;
+     mapa2->hide();
+       vidas_j1e1->setPos(0,15);
+    }
+    if(vida_j1n2==10){
+        qDebug()<<"Perdió n2";
+        ui->lcdNumber->display(1000);
+         n2timer->stop();
+         timer->stop();
+         cont=90;
+         menu->setBackgroundBrush(QImage(":/Imagenes/Fondos/Game over.gif").scaled(1550,820));
+         ui->btn_1_jug->hide();
+         ui->btn_multi->hide();
+         ui->btn_salir->show();
+         ui->btn_salir->setGeometry(1550/2-115,820/2+50,210,85);
+         ui->btn_nueva_par->hide();
+         ui->btn_cargar_par->hide();
+         ui->btn_volver->hide();
+         ui->btn_iniciar->hide();
+         ui->lcdNumber->hide();
+         ui->n_enemigo1->hide();
+         ui->btn_reanudar->hide();
+         ui->btn_guardar->hide();
+         ui->btn_volver_menu->show();
+         ui->btn_volver_menu->setGeometry(1550/2-110,820/2-35,200,80);
+         ui->ingrese_nom->hide();
+         ui->ingresar_usuario->hide();
+         ui->btn_aceptar_2->hide();
+         ui->n_jugador1->hide();
+         ui->n_enemigo1_2->hide();
+         ui->pausa->hide();
+         ui->rect->hide();
+         x1=0;
+         y1=500;
+         x3=1400;
+         y3=480;
+         ui->graphicsView->setScene(menu);
+    }
+}
+
+void MainWindow::mov_der_cpu2()
+{
+     cont_mov_der_cpu2+=1;
+      enemigo2->mov_izq_e2();
+      cont_golpe_cpu2j2=0;
+      i=10;
+      enemigo2->setPos(poscpu2=poscpu2+25,y3);
+      if(poscpu2>x1+300){
+
+          timercpu2der->stop();
+          timercpu2izq->start(150);
+      }
+      if(poscpu2>=1440){
+             timresder2->start(50);
+
+             resorte_e2_der();
+         }
+
+}
+
+void MainWindow::simulacion()
+{
+
+ float vyo=75, y2,g=10,T=20,x;
+
+        x = x1+vxo*i*(0.0007*T);
+        y2 = vyo*i*(0.001*T)-0.5*g*i*(0.001*T)*i*(0.001*T)+300;
+        xo=int(x);
+        iniciarbola();
+
+
+        if(i<60){
+            p->setPos(x1,y1-40);
+
+        }
+      if(i>62){
+          p->setPos(int(xo),int(h-y2-80));
+
+      }
+
+        if (i>700){
+            pararbola();
+        }
+        i++;
+
+}
+
+void MainWindow::iniciarbola()
+{
+
+    if(xo==x1){
+        cont_col_bola+=1;
+        vidas_ene1->vida_ene1(cont_col_bola);
+        vidas_ene1->setPos(1152,15);
+    }
+      p->sprites(i);
+      timebola->start(1);
+}
+
+void MainWindow::pararbola()
+{
+     timebola->stop();
+     xo=0;
+     i=0;
 }
